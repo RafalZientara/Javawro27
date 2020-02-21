@@ -20,12 +20,8 @@ public class User {
         return employeeList;
     }
 
-    public void setEmployeeList(List<Employee> employeeList) {
-        this.employeeList = employeeList;
-    }
-
     public void howManyEmployeesWeHave() {
-        System.out.println(name + ", liczba pracowników wynosi: " + employeeList.size());
+        System.out.println(getName() + ", liczba pracowników wynosi: " + employeeList.size());
     }
 
     public void addEmployee(Employee employee) {
@@ -34,15 +30,12 @@ public class User {
 
     public void getDataOfAllEmployees() {
         for (Employee employee : employeeList) {
-            System.out.println("Pracownik: "
-                    + employee.getName().toUpperCase()
-                    + " " + employee.getSurname().toUpperCase()
-                    + ", lat " + employee.getAge());
+            System.out.println(employee.toString());
         }
     }
 
     public void sortEmployeesBySurname() {
-        Collections.sort(getEmployeeList());
+        employeeList.sort(Comparator.comparing(Employee::getSurname));
     }
 
     public void sortEmployees(int choice) {
@@ -55,9 +48,18 @@ public class User {
         }
     }
 
-    public void writeToCSV(String csvFileName, Object object) {
+    public void writeToCSV(String csvFileName) {
         StringBuilder builder = new StringBuilder();
-        builder.append(object).append("\n");
+        for (Employee employee : employeeList) {
+            builder
+                    .append(employee.getName().toUpperCase())
+                    .append(employee.getName().equals("") ? "" : ";")
+                    .append(employee.getSurname().toUpperCase())
+                    .append(employee.getSurname().equals("") ? "" : ";")
+                    .append(employee.getAge())
+                    .append(";")
+                    .append("\n");
+        }
         try {
             FileWriter writer = new FileWriter(csvFileName);
             writer.write(String.valueOf(builder));

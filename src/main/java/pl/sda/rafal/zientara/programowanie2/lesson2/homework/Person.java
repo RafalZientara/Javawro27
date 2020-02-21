@@ -1,6 +1,6 @@
 package pl.sda.rafal.zientara.programowanie2.lesson2.homework;
 
-public class Person implements Comparable<Person> {
+public class Person {
     private String name;
     private String surname;
     private int age;
@@ -15,35 +15,20 @@ public class Person implements Comparable<Person> {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getSurname() {
         return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public int getAge() {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     @Override
     public String toString() {
-//        return "Pracownik: " + getName() + " " + getSurname() + ", ma " + getAge() + " lat.";
-        return getName().toUpperCase() + ";" + getSurname().toUpperCase() + ";" + getAge() + ";";
-    }
-
-    @Override
-    public int compareTo(Person person) {
-        return this.name.compareTo(person.name);
+        return "Pracownik: "
+                + getName().toUpperCase() + " "
+                + getSurname().toUpperCase() + ", ma "
+                + getAge() + " lat.";
     }
 
 
