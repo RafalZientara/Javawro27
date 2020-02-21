@@ -17,9 +17,9 @@ public class MainSilnia {
                 silnia5 == 120 &&
                 silnia6 == 720) {
             System.out.println("Gratulacje!");
-            System.out.println("Funkcja silni dzia�a!");
+            System.out.println("Funkcja silnia działa!");
         } else {
-            System.out.println("Co� trzeba poprawi�:");
+            System.out.println("Coś trzeba poprawić:");
             System.out.println("silnia1 = " + silnia1);
             System.out.println("silnia2 = " + silnia2);
             System.out.println("silnia3 = " + silnia3);
@@ -30,7 +30,10 @@ public class MainSilnia {
     }
 
     private static int silnia(int liczba) {
-        //TODO 1. Zaimplementuj funkcj� silnia
-        return 0;
+        int silnia = 1;
+        for (int i = 1; i <= liczba; i++) {
+            silnia *= i;
+        }
+        return silnia;
     }
 }
