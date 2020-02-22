@@ -85,6 +85,7 @@ public class User {
                 lineBuilder.append(System.lineSeparator());
                 line = br.readLine();
             }
+            br.close();
         } catch (IOException e) {
             System.out.println("Nie znaleziono takiego pliku!");
         }
