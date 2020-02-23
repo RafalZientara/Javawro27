@@ -1,9 +1,8 @@
 package pl.sda.rafal.zientara.programowanie2.lesson3;
 
+import pl.sda.rafal.zientara.programowanie2.lesson4.ByteFileComparator;
+
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,32 +54,7 @@ public class FileMain {
     }
 
     private static boolean compareByBytes(File png, File possibleDuplicate) {
-        try {
-            FileReader reader1 = new FileReader(png);
-            FileReader reader2 = new FileReader(possibleDuplicate);
-            int read1;
-            int read2;
-            do {
-                read1 = reader1.read();
-                read2 = reader2.read();
-                if (read1 != read2) {
-                    reader1.close();
-                    reader2.close();
-                    return false;
-                }
-            }
-            while (read1 != -1 && read2 != -1);
-            System.out.println("Inne! " + read1 + "!=" + read2);
-            reader1.close();
-            reader2.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Nie ma takiego pliku!");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println("Błąd odczytu!");
-            e.printStackTrace();
-        }
-        return true;
+        return new ByteFileComparator().compareByBytes(png, possibleDuplicate);
     }
 
     private static List<File> getDuplicates(File png, List<File> pngFiles) {
@@ -93,14 +67,15 @@ public class FileMain {
         return duplicates;
     }
 
-    private static boolean isDuplicate(File png, File possibleDuplicates) {
+    public static boolean isDuplicate(File png, File possibleDuplicates) {
         if (png.getAbsoluteFile().equals(possibleDuplicates.getAbsoluteFile())) {
             return false;
         }
         if (png.length() == possibleDuplicates.length()) {
-            return compareByBytes(png,possibleDuplicates);
+            return compareByBytes(png, possibleDuplicates);
+        } else {
+            return false;
         }
-        return false;
     }
 
     public static void printFilteredFiles(List<File> allFiles) {            //wyszukiwanie po rozszerzeniu
