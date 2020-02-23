@@ -1,13 +1,27 @@
 package pl.sda.rafal.zientara.tdd.lesson3;
 
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ExerciseWIthFirstLetterInFirstName {
-
 
     public static void main(String[] args) {
         StringBuilder result = getResult();
         writeAFile(result.toString());
+    }
+
+    private static void split() {
+        File file = new File("zadanie dodatkowe.txt");
+        String loaded="";
+        try {
+            loaded = loadFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Pattern pattern = Pattern.compile(":_");
+        Matcher matcher = pattern.matcher(loaded);
+
     }
 
     private static StringBuilder getResult() {
@@ -23,7 +37,7 @@ public class ExerciseWIthFirstLetterInFirstName {
         return result;
     }
 
-    private static String loadFile(File file) throws IOException {
+    public static String loadFile(File file) throws IOException {
         FileReader reader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(reader);
         return bufferedReader.readLine();
