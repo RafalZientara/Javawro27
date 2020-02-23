@@ -2,7 +2,7 @@ package pl.sda.rafal.zientara.programowanie2.lesson4;
 
 import java.io.*;
 
-class NamesMain {
+public class NamesMain {
 
     public static void main(String[] args) {
         System.out.println(new File("").getAbsolutePath());
@@ -82,6 +82,8 @@ class NamesMain {
             BufferedReader bufferedReader = new BufferedReader(reader);
             allNames = bufferedReader.readLine();
             bufferedReader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,8 +101,4 @@ class NamesMain {
         }
         return names;
     }
-
 }
-
-
-
