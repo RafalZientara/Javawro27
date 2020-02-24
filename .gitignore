@@ -4,6 +4,7 @@
 *.iml
 *.iws
 target/*
+report.txt
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
