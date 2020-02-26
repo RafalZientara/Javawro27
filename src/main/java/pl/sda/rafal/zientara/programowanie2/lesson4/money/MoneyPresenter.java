@@ -1,10 +1,12 @@
 package pl.sda.rafal.zientara.programowanie2.lesson4.money;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MoneyPresenter implements
@@ -36,8 +38,6 @@ public class MoneyPresenter implements
                 line = buffer.readLine();
             }
             //todo czytamy linijka po linijce i tworzymy liste Cost
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

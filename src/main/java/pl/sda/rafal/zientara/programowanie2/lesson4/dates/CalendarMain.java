@@ -6,23 +6,28 @@ import java.time.LocalDate;
 public class CalendarMain {
 
     public static void main(String[] args) {
-        LocalDate date = LocalDate.now();
 
+        MonthPrinter monthPrinter = new MonthPrinter();
+        monthPrinter.print();
+
+       /* LocalDate date = LocalDate.now();
         LocalDate firstDay = date.minusDays(date.getDayOfMonth() - 1);
         System.out.println(firstDay);
         LocalDate currentDate = firstDay;
         System.out.println(firstDay.getMonth());
 
         DayOfWeek first = firstDay.getDayOfWeek();
+        System.out.println("Mon Tue Wed Thu Fri Sat  Sun");
         for (int i = 0; i<first.getValue()-1; i++) {
-            System.out.print("   ");
+            System.out.print("    ");
         }
         while (firstDay.getMonth() == currentDate.getMonth()) {
-            System.out.printf("%2d ",currentDate.getDayOfMonth());
+            System.out.printf("%3d ",currentDate.getDayOfMonth());
             if (currentDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
                 System.out.println();
             }
             currentDate = currentDate.plusDays(1);
-        }
+        }*/
+
     }
 }
