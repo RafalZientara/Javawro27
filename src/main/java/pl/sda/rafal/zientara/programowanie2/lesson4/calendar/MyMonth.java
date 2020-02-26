@@ -21,11 +21,7 @@ public class MyMonth {
             System.out.print("   ");
         }
         while (currentDate.getMonth() == firstDay.getMonth()) {
-            if (currentDate.getDayOfWeek() == DayOfWeek.FRIDAY) {
-                System.out.printf("%2d", currentDate.getDayOfMonth()).append("-%o ");
-            } else {
-                System.out.printf("%2d ", currentDate.getDayOfMonth());
-            }
+            System.out.printf("%2d ", currentDate.getDayOfMonth());
             if (currentDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
                 System.out.println();
             }
