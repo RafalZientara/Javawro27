@@ -1,7 +1,6 @@
 package pl.sda.rafal.zientara.programowanie2.lesson4.money;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.List;
 
 public class WhereIsMyMoney implements MoneyContract.View {
