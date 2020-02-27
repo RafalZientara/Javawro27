@@ -9,54 +9,52 @@ import java.util.MissingFormatArgumentException;
 import java.util.Scanner;
 
 public class CalendarPrinter {
-
+    Scanner scanner = new Scanner(System.in);
     private int month;
     private int year;
 
     public void printMonthCalendar() {
-        getMonthAndYearFromUser();
+        getDataFromUser();
         printCalendar();
     }
 
     public void printYearCalendar() {
         getYearFromUser();
+        month = 1;
         for (int i = 0; i < 12; i++) {
             printCalendar();
             month++;
         }
-
     }
 
     private void getYearFromUser() {
         try {
-            Scanner scanner = new Scanner(System.in);
             System.out.println("Enter year: YYYY");
             year = scanner.nextInt();
-            month = 1;
-            scanner.close();
+        } catch (MissingFormatArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getMonthFromUser() {
+        try {
+            System.out.println("Enter month: MM");
+            month = scanner.nextInt();
+            if (month < 1 || month > 12) {
+                throw new DateTimeException("Invalid value for month: " + month);
+            } else {
+                System.out.println("You enter: " + Month.of(month));
+            }
         } catch (MissingFormatArgumentException e) {
             e.printStackTrace();
         }
     }
 
 
-    private void getMonthAndYearFromUser() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter month: MM");
-        try {
-            month = scanner.nextShort();
-            if (month < 1 || month > 12) {
-                throw new DateTimeException("Invalid value for MonthOfYear: " + month);
-            } else {
-                System.out.println("You enter: " + Month.of(month));
-                System.out.println("=============================");
-                System.out.println("Enter year");
-                year = scanner.nextInt();
-                scanner.close();
-            }
-        } catch (MissingFormatArgumentException e) {
-            e.printStackTrace();
-        }
+    private void getDataFromUser() {
+        getMonthFromUser();
+        getYearFromUser();
+        scanner.close();
     }
 
     private void printCalendar() {

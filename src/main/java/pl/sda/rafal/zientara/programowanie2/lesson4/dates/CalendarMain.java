@@ -5,7 +5,7 @@ public class CalendarMain {
     public static void main(String[] args) {
 
         CalendarPrinter monthPrinter = new CalendarPrinter();
-        monthPrinter.printYearCalendar();
+        monthPrinter.printMonthCalendar();
 
        /* LocalDate date = LocalDate.now();
         LocalDate firstDay = date.minusDays(date.getDayOfMonth() - 1);
