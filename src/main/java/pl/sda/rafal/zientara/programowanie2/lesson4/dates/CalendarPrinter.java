@@ -8,15 +8,37 @@ import java.time.Month;
 import java.util.MissingFormatArgumentException;
 import java.util.Scanner;
 
-public class MonthPrinter {
+public class CalendarPrinter {
 
     private int month;
     private int year;
 
-    public void print() {
+    public void printMonthCalendar() {
         getMonthAndYearFromUser();
         printCalendar();
     }
+
+    public void printYearCalendar() {
+        getYearFromUser();
+        for (int i = 0; i < 12; i++) {
+            printCalendar();
+            month++;
+        }
+
+    }
+
+    private void getYearFromUser() {
+        try {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter year: YYYY");
+            year = scanner.nextInt();
+            month = 1;
+            scanner.close();
+        } catch (MissingFormatArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void getMonthAndYearFromUser() {
         Scanner scanner = new Scanner(System.in);
@@ -54,8 +76,10 @@ public class MonthPrinter {
             if (currentDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
                 System.out.println();
             }
+
             currentDate = currentDate.plusDays(1);
         }
+        System.out.println("\n");
 
     }
 }

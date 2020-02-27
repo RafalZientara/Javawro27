@@ -1,14 +1,11 @@
 package pl.sda.rafal.zientara.programowanie2.lesson4.dates;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-
 public class CalendarMain {
 
     public static void main(String[] args) {
 
-        MonthPrinter monthPrinter = new MonthPrinter();
-        monthPrinter.print();
+        CalendarPrinter monthPrinter = new CalendarPrinter();
+        monthPrinter.printYearCalendar();
 
        /* LocalDate date = LocalDate.now();
         LocalDate firstDay = date.minusDays(date.getDayOfMonth() - 1);
