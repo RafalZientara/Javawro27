@@ -58,7 +58,7 @@ public class Hangman {
         return getHp() > 0;
     }
 
-    public boolean isGameOver(){
+    public boolean isGameFinished(){
         return isPuzzleSolved() || !isAlive();
     }
 }

@@ -1,4 +1,4 @@
-package pl.sda.rafal.zientara.programming_II.lesson3.money;
+package pl.sda.rafal.zientara.programming_II.lesson_3.money;
 
 import javax.swing.*;
 import java.util.List;
@@ -20,7 +20,7 @@ public class WhereIsMyMoney implements MoneyContract.View{
 
     public WhereIsMyMoney() {
         frame = new JFrame("WTF");
-        frame.setSize(300, 600);
+        frame.setSize(FIELD_WIDTH + 2 * PADDING, 600);
         frame.setLayout(null);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 

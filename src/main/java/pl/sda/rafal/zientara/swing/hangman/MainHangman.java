@@ -11,7 +11,7 @@ public class MainHangman {
         String randomPuzzle = Resources.getRandomPuzzle();
         game.setPuzzle(randomPuzzle);
 
-        while(!game.isGameOver()) {
+        while(!game.isGameFinished()) {
             System.out.println(String.format("HP: %d/%d", game.getHp(), 7));
             System.out.println("Podaj literę a-z (bez polskich znakow)");
             String input = reader.nextLine();

@@ -1,5 +1,7 @@
 package pl.sda.rafal.zientara.homeWork.zad_7;
 
+import pl.sda.rafal.zientara.homeWork.write_list_to_file.Person;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

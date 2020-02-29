@@ -1,4 +1,4 @@
-package pl.sda.rafal.zientara.programming_II.lesson3.money;
+package pl.sda.rafal.zientara.programming_II.lesson_3.money;
 
 import java.time.LocalDate;
 
@@ -18,7 +18,7 @@ public class Cost {
     public String toString() {
         return
                 "shopName='" + shopName + '\'' +
-                ", date=" + date +
-                ", price=" + price;
+                ", price=" + price +
+                ", date=" + date;
     }
 }

@@ -1,4 +1,4 @@
-package pl.sda.rafal.zientara.programming_II.lesson3.money;
+package pl.sda.rafal.zientara.programming_II.lesson_3.money;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -11,13 +11,15 @@ public class MoneyPresenter implements MoneyContract.Presenter {
 
     private final MoneyContract.View view;
 
+    List<Cost> costs = new ArrayList<>();
+
     public MoneyPresenter(MoneyContract.View view){
         this.view = view;
     }
 
     @Override
     public void initData() {
-        List<Cost> costs = new ArrayList<>();
+
         File file = new File("zakupy.csv");
         try {
             FileReader reader = new FileReader(file);
@@ -32,13 +34,12 @@ public class MoneyPresenter implements MoneyContract.Presenter {
                     Cost cost = parseCost(line);
                     costs.add(cost);
                 }
+                line = buffer.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        List<Cost> fakeData = Arrays.asList(
-                new Cost("sklep", 50.23, LocalDate.now()));
         view.refreshLIst(costs);
     }
 
@@ -57,6 +58,6 @@ public class MoneyPresenter implements MoneyContract.Presenter {
 
     @Override
     public void onWordChange(String word) {
-
+        //todo
     }
 }
