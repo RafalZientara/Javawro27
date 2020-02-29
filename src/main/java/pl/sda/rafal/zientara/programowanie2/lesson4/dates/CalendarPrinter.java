@@ -65,7 +65,7 @@ public class CalendarPrinter {
         System.out.println(firstDay.getMonth());
 
         DayOfWeek first = firstDay.getDayOfWeek();
-        System.out.println("Mon Tue Wed Thu Fri Sat  Sun");
+        System.out.println("Mon Tue Wed Thu Fri Sat Sun");
         for (int i = 0; i < first.getValue() - 1; i++) {
             System.out.print("    ");
         }
