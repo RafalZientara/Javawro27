@@ -1,12 +1,12 @@
 package pl.sda.rafal.zientara.homeWork.read_file;
 
-public class ReadFile {
+public class UserDetails {
     private String name;
     private int age;
     private String eMail;
     private String phoneNumber;
 
-    public ReadFile(String name, int age, String eMail, String phoneNumber) {
+    public UserDetails(String name, int age, String eMail, String phoneNumber) {
         this.name = name;
         this.age = age;
         this.eMail = eMail;

@@ -8,15 +8,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class DateListener implements KeyListener {
+public abstract class DoubleListener implements KeyListener {
     private final JTextField field;
-    private static final List<DateTimeFormatter> FORMATS = Arrays.asList(
-    DateTimeFormatter.ofPattern("dd-MM-yyyy"),
-    DateTimeFormatter.ofPattern("dd.MM.yyyy"),
-    DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-    DateTimeFormatter.ofPattern("yyyy.MM.dd"));
 
-    public DateListener(JTextField field) {
+    public DoubleListener(JTextField field) {
         this.field = field;
 
     }
@@ -27,15 +22,13 @@ public abstract class DateListener implements KeyListener {
 
     }
 
-    private LocalDate parseDate(String input) {
-        for (DateTimeFormatter formatter: FORMATS){
+    private double parseDouble(String input) {
+        System.out.println("Try parsing " + input);
             try{
-                LocalDate.parse(input, formatter);
+                Double.parseDouble(input);
             }catch (Exception ignored){
             }
-            }
-
-        return null;
+        return 0;
     }
 
     @Override
@@ -46,12 +39,12 @@ public abstract class DateListener implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         String input = field.getText();
-        LocalDate date = parseDate(input);
-        System.out.println(date);
-        onDateUpdate(date);
+        double value = parseDouble(input);
+        System.out.println(value);
+        onValueUpdate(value);
     }
 
-    public abstract void onDateUpdate(LocalDate newDate);
+    public abstract void onValueUpdate(Double value);
 
 
 }

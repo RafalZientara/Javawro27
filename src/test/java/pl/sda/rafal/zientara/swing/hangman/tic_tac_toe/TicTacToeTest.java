@@ -1,8 +1,11 @@
-package pl.sda.rafal.zientara;
+package pl.sda.rafal.zientara.swing.hangman.tic_tac_toe;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import pl.sda.rafal.zientara.FieldStatus;
+import pl.sda.rafal.zientara.GameResult;
+import pl.sda.rafal.zientara.TicTacToe;
 
 import static org.junit.jupiter.api.Assertions.*;
 

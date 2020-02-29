@@ -1,4 +1,4 @@
-package pl.sda.rafal.zientara;
+package pl.sda.rafal.zientara.homeWork.write_list_to_file;
 
 public class Main {
 
