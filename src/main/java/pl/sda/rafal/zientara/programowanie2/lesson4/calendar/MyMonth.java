@@ -1,14 +1,8 @@
 package pl.sda.rafal.zientara.programowanie2.lesson4.calendar;
 
-import sun.misc.ASCIICaseInsensitiveComparator;
-
-import java.awt.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.chrono.ChronoLocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Formatter;
 
 public class MyMonth {
     private Month month;
@@ -23,14 +17,15 @@ public class MyMonth {
         LocalDate currentDate = firstDay;
         System.out.println(currentDate.getMonth());
         DayOfWeek first = firstDay.getDayOfWeek();
+        System.out.println("Mon Tue Wed Thu Fri Sat Sun");
         for (int i = 0; i < first.getValue() - 1; i++) {
-            System.out.print("   ");
+            System.out.print("    ");
         }
         while (currentDate.getMonth() == firstDay.getMonth()) {
             if (currentDate.getDayOfWeek() == DayOfWeek.FRIDAY) {
-                System.out.printf("\033[31m%2d\033[0m ", currentDate.getDayOfMonth());
+                System.out.printf("\033[31m%3d\033[0m ", currentDate.getDayOfMonth());
             } else {
-                System.out.printf("%2d ", currentDate.getDayOfMonth());
+                System.out.printf("%3d ", currentDate.getDayOfMonth());
             }
             if (currentDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
                 System.out.println();

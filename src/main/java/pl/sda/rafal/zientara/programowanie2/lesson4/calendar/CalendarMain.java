@@ -1,10 +1,6 @@
 package pl.sda.rafal.zientara.programowanie2.lesson4.calendar;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CalendarMain {
 

@@ -17,13 +17,13 @@ public class UserMain {
         JTextField fileName = new JTextField("nazwa pliku");
         fileName.setBounds(145,50,200,50);
         frame.add(fileName);
-        JLabel spaceForDetails = new JLabel();
-        spaceForDetails.setBounds(70,160,250,200);
-        spaceForDetails.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY,1));
-        spaceForDetails.setHorizontalTextPosition(SwingConstants.CENTER);
-        frame.add(spaceForDetails);
+        JLabel labelForDetails = new JLabel();
+        labelForDetails.setBounds(70,160,250,200);
+        labelForDetails.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY,1));
+        labelForDetails.setHorizontalTextPosition(SwingConstants.CENTER);
+        frame.add(labelForDetails);
         readFile.addActionListener(e -> {
-            printDetailsFromFile(fileName, spaceForDetails);
+            printDetailsFromFile(fileName, labelForDetails);
         });
         frame.setVisible(true);
 

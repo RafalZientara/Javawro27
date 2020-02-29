@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.util.List;
 
 public class WhereIsMyMoney implements MoneyContract.View {
-    private static final int FIELD_WIDTH = 350;
-    private static final int FIELD_HEIGHT = 50;
+    private static final int FIELD_WIDTH = 330;
+    private static final int FIELD_HEIGHT = 60;
     private static final int PADDING = 50;
     private JFrame frame;
     private JTextField shopInput;
@@ -31,25 +31,23 @@ public class WhereIsMyMoney implements MoneyContract.View {
         frame.add(dateFrom);
 
         dateTo = new JTextField();
-        dateTo.setBounds(175, 150, 75, FIELD_HEIGHT);
+        dateTo.setBounds(230, 150, 150, FIELD_HEIGHT);
         frame.add(dateTo);
 
         costFrom = new JTextField();
-        costFrom.setBounds(PADDING, 250, 75, FIELD_HEIGHT);
+        costFrom.setBounds(PADDING, 250, 150, FIELD_HEIGHT);
         frame.add(costFrom);
 
         costTo = new JTextField();
-        costTo.setBounds(175, 250, 75, FIELD_HEIGHT);
+        costTo.setBounds(230, 250, 150, FIELD_HEIGHT);
         frame.add(costTo);
 
         result = new JList<>();
-        result.setBounds(PADDING, 350, FIELD_WIDTH,FIELD_HEIGHT);
+        result.setBounds(PADDING, 350, FIELD_WIDTH,100);
         frame.add(result);
 
         frame.setVisible(true);
-
         presenter.initData();
-
 
     }
 
