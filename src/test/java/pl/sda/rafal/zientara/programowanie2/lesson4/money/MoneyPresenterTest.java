@@ -10,10 +10,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class MoneyPresenterTest {
-    private MoneyContract.Presenter presenter;
-    private MoneyContract.View view;
+    private static MoneyContract.Presenter presenter;
+    private static MoneyContract.View view;
 
     @BeforeEach
     public void setup() {
@@ -25,7 +27,7 @@ class MoneyPresenterTest {
     @Test
     public void initPresenter() {
         presenter.initData();
-        Mockito.verify(view).refreshList(any());
+        verify(view).refreshList(any());
     }
 
     @Test
@@ -34,7 +36,7 @@ class MoneyPresenterTest {
                 new Cost("test", 1,
                         LocalDate.of(2020, 1, 16)));
         presenter.onWordChange("test");
-        Mockito.verify(view, Mockito.times(1))
+        verify(view, times(1))
                 .refreshList(expected);
     }
 
@@ -45,7 +47,7 @@ class MoneyPresenterTest {
                 new Cost("zabka", 12, LocalDate.of(2020, 1, 16)),
                 new Cost("zabka", 700.01, LocalDate.of(2020, 1, 23)));
         presenter.onWordChange("zab");
-        Mockito.verify(view, Mockito.times(1))
+        verify(view, times(1))
                 .refreshList(expected);
     }
 
@@ -53,7 +55,7 @@ class MoneyPresenterTest {
     public void findCostByNameAndPrice() {
         presenter.onWordChange("zabka");
         presenter.onPriceFromChange(500.);
-        Mockito.verify(view, Mockito.times(2)).refreshList(any());
+        verify(view, times(2)).refreshList(any());
         List<Cost> lastResult = presenter.getLastResult();
         assertEquals(1, lastResult.size());
     }
@@ -61,7 +63,7 @@ class MoneyPresenterTest {
     @Test
     public void filterByToPrice() {
         presenter.onPriceToChange(15);
-        Mockito.verify(view, Mockito.times(1)).refreshList(any());
+        verify(view, times(1)).refreshList(any());
         List<Cost> lastResult = presenter.getLastResult();
         assertEquals(2, lastResult.size());
     }
@@ -69,7 +71,7 @@ class MoneyPresenterTest {
     @Test
     public void filterByFromDate() {
         presenter.onFromDateChange(LocalDate.of(2020, 1, 20));
-        Mockito.verify(view, Mockito.times(1)).refreshList(any());
+        verify(view, times(1)).refreshList(any());
         List<Cost> lastResult = presenter.getLastResult();
         assertEquals(6, lastResult.size());
     }
@@ -77,7 +79,7 @@ class MoneyPresenterTest {
     @Test
     public void filterToDate() {
         presenter.onToDateChange(LocalDate.of(2019, 12, 31));
-        Mockito.verify(view, Mockito.times(1)).refreshList(any());
+        verify(view, times(1)).refreshList(any());
         List<Cost> lastResult = presenter.getLastResult();
         assertEquals(6, lastResult.size());
     }
