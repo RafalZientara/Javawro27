@@ -4,6 +4,6 @@ public class CalendarMain {
 
     public static void main(String[] args) {
         CalendarPrinter calendarPrinter = new CalendarPrinter();
-        calendarPrinter.printMonthCalendar();
+        calendarPrinter.printYearCalendar();
     }
 }
