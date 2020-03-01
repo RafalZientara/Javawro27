@@ -1,7 +1,7 @@
 Sklep;kwota;dzien
-zabka;12;2020-01-16
+test;1;2020-01-16
 lidl;342;2020-01-16
-monopolowy;200;2020-01-31
+monopolowy;200;2020-01-20
 lidl;432;2020-02-16
 bank;50;2019-11-19
 wyplata gotowki;150;2019-11-23
@@ -14,6 +14,6 @@ monopolowy;200;2020-01-31
 lidl;432;2020-02-16
 bank;50;2019-11-19
 wyplata gotowki;150;2019-11-23
-malpka;"345,50";2019-11-24
+malpka;"345,50";2019-12-31
 kantor;534;2020-01-01
 zabka;"700,01";2020-01-23
