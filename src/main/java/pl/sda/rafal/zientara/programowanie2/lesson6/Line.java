@@ -32,5 +32,4 @@ public class Line {
         this.type = type;
     }
 
-
 }

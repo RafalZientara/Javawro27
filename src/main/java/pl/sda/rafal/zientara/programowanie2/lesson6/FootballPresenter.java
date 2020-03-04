@@ -1,10 +1,9 @@
 package pl.sda.rafal.zientara.programowanie2.lesson6;
 
-import com.sun.org.apache.xerces.internal.xinclude.XPointerElementHandler;
-
 public class FootballPresenter implements FootballContract.Presenter {
     private final FootballContract.View view;
     private final FootballBoard board;
+
     private Point currentPosition;
     private boolean playerTopTurn = true;
 
@@ -15,7 +14,8 @@ public class FootballPresenter implements FootballContract.Presenter {
 
     @Override
     public void init() {
-        currentPosition = new Point(board.width / 2, board.height / 2);
+        currentPosition = new Point(board.width / 2,
+                board.height / 2);
         view.updatePosition(currentPosition);
     }
 
@@ -59,18 +59,17 @@ public class FootballPresenter implements FootballContract.Presenter {
         move(-1, -1);
     }
 
-    public Point getCurrentPosition() {
-        return currentPosition;
-    }
-
     private void move(int x, int y) {
-        // x e <-1,1>
-        // y e <-1,1>
-        //currentPosition
-        Point newPosition = new Point(currentPosition.x + x, currentPosition.y + y);
-        if (!board.existsLine(currentPosition, newPosition)) {
+        //x e <-1,1>
+        //y e <-1,1>
+//        currentPosition
+        System.out.printf("move x%d y%d \n",x,y);
+        Point newPosition = new Point(currentPosition.x + x,
+                currentPosition.y + y);
+        if (!board.lineExists(currentPosition, newPosition)) {
             LineType type = getTypeByTurn();
-            if (!board.hasAnyConnection(newPosition)) {
+
+            if(!board.hasAnyConnection(newPosition)) {
                 playerTopTurn = !playerTopTurn;
             }
 
@@ -85,4 +84,7 @@ public class FootballPresenter implements FootballContract.Presenter {
         return playerTopTurn ? LineType.PLAYER_TOP : LineType.PLAYER_BOTTOM;
     }
 
+    public Point getCurrentPosition() {
+        return currentPosition;
+    }
 }

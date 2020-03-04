@@ -1,7 +1,7 @@
 package pl.sda.rafal.zientara.programowanie2.lesson1.homework.farm.animals;
 
 /**
- * TODO 2. zaimplementuj klasy - kazdy w nowym pliku. pomysl jaka powinna byc klasa bazowa
+ *  zaimplementuj klasy - kazdy w nowym pliku. pomysl jaka powinna byc klasa bazowa
  * Cow
  * Dog
  * Chicken
@@ -33,7 +33,7 @@ public abstract class Animal {
         System.out.println(getSound());
     }
 
-    abstract String getSound();
+    protected abstract String getSound();
 
     public String getName() {
         return name;

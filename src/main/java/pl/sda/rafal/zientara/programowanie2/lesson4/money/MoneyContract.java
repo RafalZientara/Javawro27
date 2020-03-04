@@ -20,13 +20,12 @@ public class MoneyContract {
 
         void onPriceFromChange(double fromPrice);
 
-        void onPriceToChange(double price);
-
-        List<Cost> getLastResult();
+        void onPriceToChange(double toPrice);
 
         void onFromDateChange(LocalDate fromDate);
 
         void onToDateChange(LocalDate toDate);
 
+        List<Cost> getLastResult();
     }
 }

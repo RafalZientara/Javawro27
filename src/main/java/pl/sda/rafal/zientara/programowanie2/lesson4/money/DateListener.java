@@ -8,52 +8,36 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class DateListener implements KeyListener {
-    private final JTextField field;
+public abstract class DateListener extends GenericListener<LocalDate> {
     private static final List<DateTimeFormatter> FORMATS =
             Arrays.asList(
+                    DateTimeFormatter.ofPattern("d-M-yyyy"),
+                    DateTimeFormatter.ofPattern("dd-M-yyyy"),
+                    DateTimeFormatter.ofPattern("d-MM-yyyy"),
                     DateTimeFormatter.ofPattern("dd-MM-yyyy"),
                     DateTimeFormatter.ofPattern("dd.MM.yyyy"),
                     DateTimeFormatter.ofPattern("dd MM yyyy"),
                     DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-                    DateTimeFormatter.ofPattern("yyyy.MM.dd"),
-                    DateTimeFormatter.ofPattern("yyyy MM dd")
+                    DateTimeFormatter.ofPattern("yyyy MM dd"),
+                    DateTimeFormatter.ofPattern("yyyy.MM.dd")
             );
 
     public DateListener(JTextField field) {
-        this.field = field;
+        super(field);
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-
-
-    }
-
-    private LocalDate parseDate(String input) {
-        for (DateTimeFormatter formatter : FORMATS
-        ) {
+    protected LocalDate parseValue(String input) {
+        System.out.println("Try formatting : " + input);
+        for (DateTimeFormatter formatter : FORMATS) {
             try {
                 return LocalDate.parse(input, formatter);
-            } catch (Exception e) {
-                //  e.printStackTrace();
+            } catch (Exception ignored) {
+//                System.out.println(ignored.getMessage());
             }
         }
+        showError();
         return null;
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        String input = field.getText();
-        LocalDate date = parseDate(input);
-        System.out.println(date);
-        onDateUpdate(date);
-    }
-
-    protected abstract void onDateUpdate(LocalDate newDate);
 }

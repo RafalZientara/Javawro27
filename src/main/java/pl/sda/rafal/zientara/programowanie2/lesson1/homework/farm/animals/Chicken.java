@@ -6,8 +6,12 @@ public class Chicken extends BirdAnimal {
         super(skin, name);
     }
 
+    public Chicken(String name) {
+        super("pióra", name);
+    }
+
     public Chicken() {
-        this("scsac", "Cooww");
+        this("KFC");
     }
 
     @Override
@@ -16,7 +20,7 @@ public class Chicken extends BirdAnimal {
     }
 
     @Override
-    String getSound() {
-        return "Coco";
+    protected String getSound() {
+        return "Ko ko ko";
     }
 }

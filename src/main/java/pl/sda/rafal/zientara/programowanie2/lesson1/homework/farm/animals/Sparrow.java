@@ -7,11 +7,11 @@ public class Sparrow extends BirdAnimal {
     }
 
     public Sparrow(String name) {
-        this("piora", name);
+        this("pióra", name);
     }
 
     public Sparrow() {
-        this("piora", "Kapitan Jack");
+        this("Kapitan Jack");
     }
 
     @Override
@@ -20,7 +20,7 @@ public class Sparrow extends BirdAnimal {
     }
 
     @Override
-    String getSound() {
-        return "pi pi pi";
+    protected String getSound() {
+        return "Pi pi pi";
     }
 }

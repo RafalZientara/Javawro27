@@ -9,11 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FootballBoardTest {
 
-    FootballBoard board;
+    private FootballBoard board;
 
     @BeforeEach
     public void setup() {
-        board = new FootballBoard(10, 12);
+        board = new FootballBoard(6, 8);
     }
 
     @Test
@@ -21,8 +21,10 @@ class FootballBoardTest {
         Line line = new Line(new Point(1, 1),
                 new Point(2, 2),
                 LineType.SIDE);
+
         board.addLine(line);
-        boolean exists = board.existsLine(line.start, line.end);
+
+        boolean exists = board.lineExists(line.start, line.end);
         assertTrue(exists);
     }
 
@@ -31,18 +33,25 @@ class FootballBoardTest {
         Line line = new Line(new Point(1, 1),
                 new Point(2, 2),
                 LineType.SIDE);
+
         board.addLine(line);
-        boolean exists = board.existsLine(new Point(1, 1), new Point(2, 2));
+
+        boolean exists = board.lineExists(new Point(1, 1),
+                new Point(2, 2));
         assertTrue(exists);
     }
+
 
     @Test
     public void insertedLineCanBeCheckedNewInstanceReverted() {
         Line line = new Line(new Point(1, 1),
                 new Point(2, 2),
                 LineType.SIDE);
+
         board.addLine(line);
-        boolean exists = board.existsLine(new Point(2, 2), new Point(1, 1));
+
+        boolean exists = board.lineExists(new Point(2, 2),
+                new Point(1, 1));
         assertTrue(exists);
     }
 
@@ -51,17 +60,24 @@ class FootballBoardTest {
         Line line = new Line(new Point(1, 1),
                 new Point(2, 2),
                 LineType.SIDE);
+
         board.addLine(line);
+
         assertThrows(IllegalStateException.class,
                 () -> board.addLine(line));
     }
 
     @Test
     public void lineDoesNotExist() {
+        //given
         Line line = new Line(new Point(1, 1),
                 new Point(2, 2),
                 LineType.SIDE);
+
+        //when
         boolean exists = board.lineExists(line);
+
+        //then
         assertFalse(exists);
     }
 
@@ -71,4 +87,5 @@ class FootballBoardTest {
         List<Line> lines = board.getLines();
         assertFalse(lines.isEmpty());
     }
+
 }

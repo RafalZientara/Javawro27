@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Cost {
-     final String shopName;
-     final double price;
-     final LocalDate date;
+    final String shopName;
+    final double price;
+    final LocalDate date;
 
     public Cost(String shopName, double price, LocalDate date) {
         this.shopName = shopName;

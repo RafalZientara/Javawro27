@@ -8,7 +8,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
 
-public class FootballView extends JTextField implements FootballContract.View {
+public class FootballView extends JTextField
+        implements FootballContract.View {
+    private static final int CELL_PADDING = 1;
     private FootballBoard board;
     private Point position;
     private LineType player = LineType.PLAYER_TOP;
@@ -28,7 +30,7 @@ public class FootballView extends JTextField implements FootballContract.View {
 
             @Override
             public void keyReleased(KeyEvent e) {
-
+                System.out.println(e);
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_NUMPAD8:
                         presenter.moveTop();
@@ -54,53 +56,55 @@ public class FootballView extends JTextField implements FootballContract.View {
                     case KeyEvent.VK_NUMPAD7:
                         presenter.moveTopLeft();
                         break;
+                    default:
+                        System.out.println("olewam " + e);
                 }
+
             }
         });
-
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        //    super.paintComponent(g);
+//        super.paintComponent(g);
         g.clearRect(0, 0, getWidth(), getHeight());
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(5));
+
         g.setColor(Color.LIGHT_GRAY);
-        int cellW = getWidth() / board.width;
-        int cellH = getHeight() / board.height;
+        int cellW = getWidth() / (board.width + 2 * CELL_PADDING);
+        int cellH = getHeight() / (board.height + 2 * CELL_PADDING);
+
         for (int i = 0; i <= board.height; i++) {
-            int y = i * cellH;
-            int x1 = 0;
-            int x2 = getWidth();
+            int y = (i + CELL_PADDING) * cellH;
+            int x1 = CELL_PADDING;
+            int x2 = getWidth() - +CELL_PADDING;
             g.drawLine(x1, y, x2, y);
         }
         for (int i = 0; i <= board.width; i++) {
-            int x = i * cellW;
-            int y = 0;
-            int y2 = getHeight();
-            g.drawLine(x, y, x, y2);
-
+            int y1 = CELL_PADDING;
+            int y2 = getHeight() - CELL_PADDING;
+            int x = (i + CELL_PADDING) * cellW;
+            g.drawLine(x, y1, x, y2);
         }
+
+        //skos
         g.drawLine(0, 0, getWidth(), getHeight());
 
-        g.setColor(Color.BLACK);
-
+        g2.setStroke(new BasicStroke(10));
         List<Line> lines = board.getLines();
-
         for (Line line : lines) {
             g.setColor(getLineColor(line.type));
-            g.drawLine(
-                    line.start.x * cellW,
-                    line.start.y * cellH,
-                    line.end.x * cellW,
-                    line.end.y * cellH);
+            g.drawLine((line.start.x + CELL_PADDING) * cellW,
+                    (line.start.y + CELL_PADDING) * cellH,
+                    (line.end.x + CELL_PADDING) * cellW,
+                    (line.end.y + CELL_PADDING) * cellH);
         }
 
         if (position != null) {
             int r = 5;
-            int x = position.x * cellW - r;
-            int y = position.y * cellH - r;
+            int x = (position.x + CELL_PADDING) * cellW - r;
+            int y = (position.y + CELL_PADDING) * cellH - r;
             g.setColor(getLineColor(player));
             g.drawOval(x, y, r * 2, r * 2);
         }
@@ -115,9 +119,8 @@ public class FootballView extends JTextField implements FootballContract.View {
                 return Color.MAGENTA;
             case PLAYER_BOTTOM:
                 return Color.BLUE;
-            default:
-                return Color.RED;
         }
+        return Color.RED;
     }
 
     public void setBoard(FootballBoard board) {
@@ -138,4 +141,5 @@ public class FootballView extends JTextField implements FootballContract.View {
     public void setPresenter(FootballContract.Presenter presenter) {
         this.presenter = presenter;
     }
+
 }

@@ -2,16 +2,20 @@ package pl.sda.rafal.zientara.programowanie2.lesson1.homework.farm.animals;
 
 public class Dog extends MammalAnimal {
 
-    public Dog(String skin, String name) {
-        super("skin", name);
+    public Dog() {
+        this("futerko", "Burek");
     }
 
-    public Dog() {
-        this("wlosy", "super Dog");
+    public Dog(String name) {
+        super("futerko", name);
+    }
+
+    public Dog(String skin, String name) {
+        super(skin, name);
     }
 
     @Override
-    String getSound() {
-        return "Woof";
+    protected String getSound() {
+        return "Hau hau!";
     }
 }

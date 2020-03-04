@@ -1,19 +1,20 @@
 package pl.sda.rafal.zientara.programowanie2.lesson1.homework.farm;
 
 import pl.sda.rafal.zientara.programowanie2.lesson1.homework.farm.animals.Cow;
-import pl.sda.rafal.zientara.programowanie2.lesson1.homework.farm.animals.Dog;
-import pl.sda.rafal.zientara.programowanie2.lesson1.homework.farm.animals.MammalAnimal;
 
 public class MainCowFarm {
 
     public static void main(String[] args) {
-        //todo 6. Stworz farme Donalda gdzie bedzie mozna wprowadzac tylko krowy i dodaj dowolna liczbe
-        OldMcDonaldFarm<MammalAnimal> mammalFarm = new OldMcDonaldFarm<>();
-        mammalFarm.addAnimal(new Dog());
-        mammalFarm.addAnimal(new Cow());
-
+        //todo 6. Stworz farme Donalda gdzie bedzie mozna wprowadzac tylko krowy i dodaj dowolna ich liczbe
+        CowFarm<Cow> cowFarm = new CowFarm<>();
+//        mammalFarm.addAnimal(new Dog());
+        cowFarm.addAnimal(new Cow());
+        cowFarm.addAnimal(new Cow());
+        cowFarm.addAnimal(new Cow());
+        cowFarm.addAnimal(new Cow());
+        cowFarm.addAnimal(new Cow());
         //todo 7. Wydrukuj zawartosc farmy przez printAllInfo()
-
-        mammalFarm.printAllInfo();
+        cowFarm.printAllInfo();
+        System.out.println("Ile mleka: " + cowFarm.produceMilk());
     }
 }

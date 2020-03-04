@@ -1,5 +1,6 @@
 package pl.sda.rafal.zientara.programowanie2.lesson1;
 
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -16,7 +17,7 @@ public class HangmanController {
     @FXML
     public Button submitButton;
     @FXML
-    public Label passwordLable;
+    public Label passwordLabel;
     @FXML
     public Line line1;
     @FXML
@@ -47,15 +48,13 @@ public class HangmanController {
     }
 
     @FXML
-    public void hundleConfirm() {
-
+    public void handleConfirm() {
         if (game.isGameFinished()) {
             resetGame();
         } else {
             submitGuess();
         }
         refreshUI();
-
     }
 
     private void submitGuess() {
@@ -63,28 +62,27 @@ public class HangmanController {
         if (text.length() > 1) {
             game.guessPuzzle(text);
         } else if (text.length() == 1) {
-            game.guessLetter(text.charAt(0));
+            char c = text.charAt(0);
+            game.guessLetter(c);
         }
         input.clear();
     }
 
     private void refreshUI() {
         refreshPassword();
-        refreshHP();
+        refreshHp();
         refreshSubmitButton();
     }
 
     private void refreshSubmitButton() {
-
-        if (!game.isGameFinished()) {
-            submitButton.setText("Ok");
-        } else {
+        if (game.isGameFinished()) {
             submitButton.setText("RESET");
+        } else {
+            submitButton.setText("OK");
         }
-
     }
 
-    private void refreshHP() {
+    private void refreshHp() {
         line1.setVisible(false);
         line2.setVisible(false);
         line3.setVisible(false);
@@ -111,7 +109,7 @@ public class HangmanController {
     }
 
     private void refreshPassword() {
-        passwordLable.setText(game.getOutput());
+        passwordLabel.setText(game.getOutput());
     }
 
 }
