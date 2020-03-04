@@ -3,6 +3,7 @@ package programowanie2.lesson6;
 public class FootballPresenter implements FootballContract.Presenter {
     private final FootballContract.View view;
     private final FootballBoard board;
+
     private Point currentPosition;
     private boolean playerTopTurn = true;
 
@@ -13,7 +14,8 @@ public class FootballPresenter implements FootballContract.Presenter {
 
     @Override
     public void init() {
-        currentPosition = new Point(board.width / 2, board.height / 2);
+        currentPosition = new Point(board.width / 2,
+                board.height / 2);
         view.updatePosition(currentPosition);
     }
 
@@ -58,18 +60,23 @@ public class FootballPresenter implements FootballContract.Presenter {
     }
 
     private void move(int x, int y) {
-        Point newPosition = new Point(currentPosition.x + x, currentPosition.y + y);
-       if(!board.lineExist(currentPosition,newPosition)){
-           LineType type = getTypeByTurn();
+        //x e <-1,1>
+        //y e <-1,1>
+//        currentPosition
+        System.out.printf("move x%d y%d \n",x,y);
+        Point newPosition = new Point(currentPosition.x + x,
+                currentPosition.y + y);
+        if (!board.lineExists(currentPosition, newPosition)) {
+            LineType type = getTypeByTurn();
 
-           if (!board.hasAnyConnections(newPosition)){
-               playerTopTurn = !playerTopTurn;
-           }
+            if(!board.hasAnyConnection(newPosition)) {
+                playerTopTurn = !playerTopTurn;
+            }
 
-           board.addLine(new Line(currentPosition,newPosition,type));
-           currentPosition = newPosition;
-           view.updatePosition(currentPosition);
-           view.updateCurrentPlayer(getTypeByTurn());
+            board.addLine(new Line(currentPosition, newPosition, type));
+            currentPosition = newPosition;
+            view.updatePosition(currentPosition);
+            view.updateCurrentPlayer(getTypeByTurn());
         }
     }
 
@@ -80,5 +87,4 @@ public class FootballPresenter implements FootballContract.Presenter {
     public Point getCurrentPosition() {
         return currentPosition;
     }
-
 }

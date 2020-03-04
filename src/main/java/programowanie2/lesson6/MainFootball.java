@@ -1,8 +1,5 @@
 package programowanie2.lesson6;
 
-import programowanie2.lesson6.FootballContract;
-import programowanie2.lesson6.FootballView;
-
 import javax.swing.*;
 
 public class MainFootball {
@@ -22,10 +19,12 @@ public class MainFootball {
 
         showMeBoard(footballView);
     }
+
     private static void showMeBoard(FootballView footballView) {
-        JFrame frame = new JFrame("Football");
+        JFrame frame = new JFrame("Football - USE NUMPAD");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(300,400);
+        frame.setSize(500,600);
+
         frame.add(footballView);
         frame.setVisible(true);
     }
