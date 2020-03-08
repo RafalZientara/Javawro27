@@ -1,0 +1,3 @@
+Kasia;Nowak;23
+Ania;Dort;26
+Darek;Sind;28

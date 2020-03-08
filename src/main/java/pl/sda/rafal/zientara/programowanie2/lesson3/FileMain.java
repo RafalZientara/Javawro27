@@ -60,16 +60,30 @@ public class FileMain {
         try {
             FileReader reader1 = new FileReader(png);
             FileReader reader2 = new FileReader(possibleDuplicate);
+
+            char [] buffer1 = new char[1024];
+            char [] buffer2 = new char[1024];
             int read1;
             int read2;
             do{
-                read1 = reader1.read();
-                read2 = reader2.read();
+                read1 = reader1.read(buffer1);
+                read2 = reader2.read(buffer2);
                 if (read1!=read2){
                     System.out.println("Inne "+read1 + " != "+ read2);
                     reader1.close();
                     reader2.close();
                     return false;
+                } else {
+                    for (int i = 0; i < buffer1.length; i++) {
+                        char c1 = buffer1[i];
+                        char c2 = buffer2[i];
+                        if (c1 != c2){
+                            System.out.println("Inne "+read1 + " != "+ read2);
+                            reader1.close();
+                            reader2.close();
+                            return false;
+                        }
+                    }
                 }
             }
             while (read1!=-1 && read2!=-1);
