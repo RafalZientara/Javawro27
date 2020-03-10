@@ -63,7 +63,14 @@ public class FootballPresenter implements FootballContract.Presenter {
         //x E <-1,1>
         //y E <-1,1>
         Point newPosition = new Point(currentPosition.x+x,currentPosition.y+y);
-        if(!board.lineExists(currentPosition,newPosition)){
+        System.out.println(getTypeByTurn());
+        if (playerTopWin()) {
+            System.out.println("PlayerTopWin");
+        }
+        if (playerBottomWin()){
+            System.out.println("PlayerBottomWin");
+        }
+        if(!board.lineExists(currentPosition,newPosition) && !playerTopWin() && !playerBottomWin()){
             LineType type = getTypeByTurn();
             if(!board.hasAnyConnection(newPosition)){
                 playerTopTurn = !playerTopTurn;
@@ -78,6 +85,26 @@ public class FootballPresenter implements FootballContract.Presenter {
 
     private LineType getTypeByTurn() {
         return playerTopTurn ? LineType.PLAYER_TOP : LineType.PLAYER_BOTTOM;
+    }
+
+    private boolean playerTopWin() {
+        int widthCenter = board.width / 2;
+        if (getTypeByTurn()==LineType.PLAYER_TOP && (currentPosition.equals(new Point(widthCenter - 1, 0)) || currentPosition.equals(new Point(widthCenter, 0))
+                || currentPosition.equals(new Point(widthCenter + 1, 0)))) {
+            //System.out.println("Player Top win!");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean playerBottomWin(){
+        int widthCenter = board.width / 2;
+        if(getTypeByTurn()==LineType.PLAYER_BOTTOM && (currentPosition.equals(new Point(widthCenter - 1, board.height)) || currentPosition.equals(new Point(widthCenter,board.height))
+                || currentPosition.equals(new Point(widthCenter + 1,board.height)))){
+            //System.out.println("Player Bottom win!");
+            return true;
+        }
+        return false;
     }
 
     public Point getCurrentPosition(){

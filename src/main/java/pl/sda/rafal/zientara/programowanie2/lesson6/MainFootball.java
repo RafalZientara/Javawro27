@@ -13,9 +13,9 @@ public class MainFootball {
             presenter = new FootballPresenter(view, board);
             footballView.setBoard(board);
             footballView.setPresenter(presenter);
+            board.initBlockedArea();
             board.initSides();
             presenter.init();
-
             showMeBoard(footballView);
         }
         private static void showMeBoard (FootballView footballView) {

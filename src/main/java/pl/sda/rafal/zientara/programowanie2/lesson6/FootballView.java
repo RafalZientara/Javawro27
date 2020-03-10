@@ -1,7 +1,5 @@
 package pl.sda.rafal.zientara.programowanie2.lesson6;
 
-import javafx.scene.input.KeyCode;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -9,6 +7,7 @@ import java.awt.event.KeyListener;
 import java.util.List;
 
 public class FootballView extends JTextField implements FootballContract.View {
+    private static final int CELL_PADDING = 1;
     private FootballBoard board;
     private Point position;
     private LineType player=LineType.PLAYER_TOP;
@@ -70,33 +69,36 @@ public class FootballView extends JTextField implements FootballContract.View {
 
         g.setColor(Color.LIGHT_GRAY);
         g2.setStroke(new BasicStroke(3));
-        int cellW = getWidth()/board.width;
-        int cellH = getHeight()/board.height;
+        int cellW = getWidth()/(board.width + 2*CELL_PADDING);
+        int cellH = getHeight()/(board.height + 2*CELL_PADDING);
 
         for (int i = 0; i<= board.height; i++){
-            int y = i * cellH;
-            int x1 = 0;
-            int x2 = getWidth();
+            int y = (i + CELL_PADDING) * cellH;
+            int x1 = CELL_PADDING;
+            int x2 = getWidth() - CELL_PADDING;
             g.drawLine(x1,y,x2,y);
         }
         for (int i = 0; i<= board.width; i++){
-            int x = i * cellW;
-            int y1 = 0;
-            int y2 = getHeight();
+            int x = (i+ CELL_PADDING) * cellW;
+            int y1 = CELL_PADDING;
+            int y2 = getHeight() - CELL_PADDING;
             g.drawLine(x,y1,x,y2);
         }
-        g.drawLine(0, 0, getWidth(), getHeight());
+//        g.drawLine(0, 0, getWidth(), getHeight()); //przek¹tna przez boisko
         g.setColor(Color.BLACK);
         List<Line> lines = board.getLines();
         for (Line line : lines){
             g.setColor(getLineColor(line.type));
-            g.drawLine(line.start.x * cellW,line.start.y * cellH,line.end.x * cellW ,line.end.y * cellH);
+            g.drawLine((line.start.x + CELL_PADDING) * cellW,
+                    (line.start.y + CELL_PADDING) * cellH,
+                    (line.end.x + CELL_PADDING) * cellW ,
+                    (line.end.y + CELL_PADDING) * cellH);
         }
 
         if (position!=null){
             int r = 5;
-            int x = position.x * cellW -r;
-            int y = position.y * cellH -r;
+            int x = (position.x + CELL_PADDING) * cellW -r;
+            int y = (position.y + CELL_PADDING) * cellH -r;
             g.setColor(getLineColor(player));
             g.drawOval(x,y,r*2,r*2);
         }
@@ -108,9 +110,13 @@ public class FootballView extends JTextField implements FootballContract.View {
             case SIDE:
                 return Color.BLACK;
             case PLAYER_TOP:
+            case BOTTOMGOAL:
                 return Color.BLUE;
             case PLAYER_BOTTOM:
+            case TOPGOAL:
                 return Color.MAGENTA;
+            case BLOCKED:
+                return Color.lightGray;
         }
         return Color.RED;
     }

@@ -47,7 +47,7 @@ class FootballBoardTest {
 
         assertThrows(IllegalStateException.class, ()-> board.addLine(line));
     }
-    //todo
+
     @Test
     public void lineDoesNotExist(){
         Line line = new Line (new Point (1,1), new Point(2,2),LineType.SIDE);
@@ -62,6 +62,14 @@ class FootballBoardTest {
         board.initSides();
         List<Line> lines = board.getLines();
         assertFalse(lines.isEmpty());
+    }
+
+    @Test
+    public void isOutOfField(){
+        board.initBlockedArea();
+        Line line = new Line (new Point (0,1), new Point(0,0),LineType.SIDE);
+        boolean exist = board.lineExists(line);
+        assertTrue(exist);
     }
 
 }
