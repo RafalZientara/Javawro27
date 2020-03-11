@@ -1,6 +1,7 @@
 package pl.sda.rafal.zientara.tdd.lesson3.money;
 
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -159,18 +160,51 @@ public class MoneyPresenter implements MoneyContract.Presenter {
         return String.valueOf(sumValue);
     }
 
-    @Override
-    public void saveData(){
+
+   /* private void saveData(File file){
         try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream("baza.csv"));
+            PrintWriter writer;
+            writer = new PrintWriter(file);
             for (Cost p : lastResult)
-                pw.println(p.toString());
-            pw.println("\nPrices from to: "+moreThanValue+" "+lessThanValue);
-            pw.println("Filtered date from to: "+fromDate+" "+toDate);
-            pw.println("Total price to pay "+reduce.get());
-            pw.close();
+                writer.println(p.toString());
+            writer.println("\nPrices from to: "+moreThanValue+" "+lessThanValue);
+            writer.println("Filtered date from to: "+fromDate+" "+toDate);
+            writer.println("Total price to pay "+ reduce.get());
+            writer.close();
+
         } catch (Exception e) {
             e.getStackTrace();
         }
     }
+
+    private FileChooser setFileChooserOptions() {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+        return fileChooser;
+    }
+
+    FileChooser newFile = new FileChooser();
+
+    @Override
+    public void handleSave() {
+        File file = setFileChooserOptions().showSaveDialog(new Stage());
+        if (file != null) {
+            saveData(file);
+        }
+    }*/
+   @Override
+   public void saveData(){
+       try {
+           PrintWriter pw = new PrintWriter(new FileOutputStream("baza.csv"));
+           for (Cost p : lastResult)
+               pw.println(p.toString());
+           pw.println("\nPrices from to: "+moreThanValue+" "+lessThanValue);
+           pw.println("Filtered date from to: "+fromDate+" "+toDate);
+           pw.println("Total price to pay "+reduce.get());
+           pw.close();
+       } catch (Exception e) {
+           e.getStackTrace();
+       }
+   }
 }

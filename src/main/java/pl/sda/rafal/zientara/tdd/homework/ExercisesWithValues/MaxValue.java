@@ -1,4 +1,4 @@
-package pl.sda.rafal.zientara.tdd.homework;
+package pl.sda.rafal.zientara.tdd.homework.ExercisesWithValues;
 
 /*
 Zad 4

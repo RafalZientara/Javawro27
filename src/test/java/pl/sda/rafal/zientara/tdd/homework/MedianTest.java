@@ -1,6 +1,7 @@
 package pl.sda.rafal.zientara.tdd.homework;
 
 import org.junit.jupiter.api.Test;
+import pl.sda.rafal.zientara.tdd.homework.ExercisesWithValues.Median;
 
 import static org.junit.jupiter.api.Assertions.*;
 
