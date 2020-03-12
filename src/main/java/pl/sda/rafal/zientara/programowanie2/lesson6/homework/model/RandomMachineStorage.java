@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class RandomMachineStorage implements CashMachineStorage {
 
+
     private List<Cash> money;
 
     public RandomMachineStorage() {
@@ -25,6 +26,6 @@ public class RandomMachineStorage implements CashMachineStorage {
 
     @Override
     public List<Cash> availableMoney() {
-        return null;
+        return money;
     }
 }

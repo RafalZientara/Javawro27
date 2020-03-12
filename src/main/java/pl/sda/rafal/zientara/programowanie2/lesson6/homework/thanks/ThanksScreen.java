@@ -11,7 +11,6 @@ import java.util.List;
 public class ThanksScreen extends BaseSwingScreen implements ThanksContract.View {
     private final JLabel message;
     private final JLabel moneyInfo;
-    private final JButton confirm;
     private final ScreenListener listener;
     private final ThanksContract.Presenter presenter;
 
@@ -23,17 +22,14 @@ public class ThanksScreen extends BaseSwingScreen implements ThanksContract.View
         frame.setSize(400, 300);
         frame.setLayout(new GridLayout(0, 1));
 
-        message = new JLabel("There is Your cash!" + System.lineSeparator() + //todo aktualizacja tekstu w showMeTheMoney()
-                "Don't spend it too fast! Bzzzt!");
+        message = new JLabel();
         frame.add(message);
 
         moneyInfo = new JLabel();
         frame.add(moneyInfo);
 
-        confirm = new JButton("Ok Thanks! :D");
-        confirm.addActionListener(e -> {
-            presenter.okClicked();
-        });
+        JButton confirm = new JButton("Ok Thanks! :D");
+        confirm.addActionListener(e -> presenter.okClicked());
         frame.add(confirm);
         presenter.init();
 
@@ -47,16 +43,20 @@ public class ThanksScreen extends BaseSwingScreen implements ThanksContract.View
     @Override
     public void showMeTheMoney(List<Cash> withdrawal) {
         StringBuilder builder = new StringBuilder();
+        StringBuilder message;
 
-        //todo pokaz wynik w formie:
-        //10x2
-        //200x1
-        //500x3
-        for (Cash cash : withdrawal) {
-            builder.append(cash.getWorth()).append(", ");
-        }
-        //todo jesli nic nie wyplacono pokaz odpowiedni komunikat
-        moneyInfo.setText(builder.toString());
+
+
+        if(withdrawal.size() > 0) {
+            message = new StringBuilder("There is Your cash!" + System.lineSeparator() +
+                    "Don't spend it too fast! Bzzzt!");
+            for (Cash cash : withdrawal) {
+                builder.append(cash.getWorth()).append(", ");
+            }
+            moneyInfo.setText(builder.toString());
+        }else message = new StringBuilder("Nothing to withdraw...");
+        this.message.setText(String.valueOf(message));
+
     }
 
     public interface ScreenListener {

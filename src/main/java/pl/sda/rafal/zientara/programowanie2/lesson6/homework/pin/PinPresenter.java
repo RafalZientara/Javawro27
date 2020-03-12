@@ -1,22 +1,51 @@
 package pl.sda.rafal.zientara.programowanie2.lesson6.homework.pin;
 
-public class PinPresenter implements PinContract.Presenter {
-    private final PinContract.View view;
+import pl.sda.rafal.zientara.programowanie2.lesson6.homework.Check;
 
-    public PinPresenter(PinContract.View view) {
+
+public class PinPresenter implements PinContract.Presenter {
+    private PinContract.View view;
+    private PinScreen pinScreen;
+
+    private static final int PIN_LENGTH = 4;
+    private static final String ACTUAL_PIN = "1234";
+
+    PinPresenter(PinContract.View view) {
         this.view = view;
+        pinScreen = new PinScreen();
+    }
+
+    PinPresenter(PinScreen pinScreen) {
+        this.view = new PinView(pinScreen, this);
+        this.pinScreen = pinScreen;
     }
 
     @Override
     public void onPinTyping(String pin) {
-        //todo funkcja wywolywana w trakcie pisania
-        //todo przycisk confirm jest dostepny tylko gdy u¿ytkownik wpisa³ 4 cyfry
-
+        if (pin.trim().length() < PIN_LENGTH && Check.isNumeric(pin)) {
+            view.showTooShortPinError();
+            view.disableConfirmButton();
+        } else if (pin.trim().length() > PIN_LENGTH  && Check.isNumeric(pin)) {
+            view.showTooLongPinError();
+            view.disableConfirmButton();
+        } else if (!Check.isNumeric(pin)){
+            view.showOnlyDigitsError();
+            view.disableConfirmButton();
+        } else{
+            view.hideError();
+            view.enableConfirmButton();
+        }
     }
 
     @Override
     public void onPinConfirmed(String pin) {
-        //todo sprawdz czy wprowadzono pin 1234
+
+        if (pin.trim().equals(ACTUAL_PIN)) view.correctPin();
+        else view.wrongPin();
+
     }
+
+
+
 
 }

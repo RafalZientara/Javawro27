@@ -71,7 +71,7 @@ class PinPresenterTest {
     @Test
     public void correctPinConfirmed() {
         // given when
-        presenter.onPinConfirmed("1234");//todo 1234 to ZAWSZE poprawny pin
+        presenter.onPinConfirmed("1234");
 
         // then
         verify(view).correctPin();
