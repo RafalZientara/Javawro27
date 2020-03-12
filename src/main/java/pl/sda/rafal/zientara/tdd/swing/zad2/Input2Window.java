@@ -9,18 +9,18 @@ public class Input2Window {
     private JButton button;
     private MergeListener listener;
 
-    public Input2Window(){
+    public Input2Window() {
         JFrame frame = new JFrame("Input 2");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setSize(300,350);
+        frame.setSize(300, 350);
 
         textView2 = new JTextField("input 2 text");
-        textView2.setBounds(50,50, 200,100);
+        textView2.setBounds(50, 50, 200, 100);
         frame.add(textView2);
 
         button = new JButton("Połącz");
-        button.setBounds(50,200,200,100);
+        button.setBounds(50, 200, 200, 100);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

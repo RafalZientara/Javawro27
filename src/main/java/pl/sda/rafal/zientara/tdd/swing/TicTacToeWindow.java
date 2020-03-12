@@ -11,10 +11,6 @@ import java.awt.event.ActionListener;
 public class TicTacToeWindow {
     private TicTacToe game = new TicTacToe();
 
-    public static void main(String[] args) {
-        new TicTacToeWindow();
-    }
-
     public TicTacToeWindow() {
         JFrame frame = new JFrame("Siema");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -52,6 +48,10 @@ public class TicTacToeWindow {
         frame.setLayout(gridLayout);
         frame.setVisible(true);
 
+    }
+
+    public static void main(String[] args) {
+        new TicTacToeWindow();
     }
 
 }
