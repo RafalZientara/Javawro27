@@ -6,7 +6,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
 
-public class FootballView extends JTextField
+public class
+FootballView extends JTextField
         implements FootballContract.View {
     private static final int CELL_PADDING = 1;
     private FootballBoard board;
@@ -134,6 +135,9 @@ public class FootballView extends JTextField
     public void updateCurrentPlayer(LineType player) {
         this.player = player;
     }
+
+
+
 
     public void setPresenter(FootballContract.Presenter presenter) {
         this.presenter = presenter;

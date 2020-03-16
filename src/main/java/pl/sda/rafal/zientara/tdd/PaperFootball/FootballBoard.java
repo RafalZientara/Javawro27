@@ -32,6 +32,12 @@ public class FootballBoard {
         return false;
     }
 
+    public void cleanLinesAndHideBoard() {
+        lines.clear();
+        initSides();
+
+    }
+
     public List<Line> getLines() {
         return lines;
     }

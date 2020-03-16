@@ -5,15 +5,16 @@ import javax.swing.*;
 public class FootballPresenter implements FootballContract.Presenter {
     private final FootballContract.View view;
     private final FootballBoard board;
+    private final FootballContract.MainMenu menu;
     private Point currentPosition;
     private boolean playerTopTurn = true;
-    private static int playerOneScore;
-    private static int playerTwoScore;
-    private FootballViewMenu menu;
+    private int playerOneScore;
+    private int playerTwoScore;
 
-    public FootballPresenter(FootballContract.View view, FootballBoard board) {
+    public FootballPresenter(FootballContract.MainMenu menu, FootballContract.View view, FootballBoard board) {
         this.view = view;
         this.board = board;
+        this.menu = menu;
     }
 
     @Override
@@ -66,13 +67,7 @@ public class FootballPresenter implements FootballContract.Presenter {
         return winnerStatement() || checkLoseStatement();
     }
 
-    public String setText() {
-        if (playerTopTurn) return "Green";
-        else return "Blue";
-    }
-
     private void move(int x, int y) {
-    //menu.setTitleText(playerTopTurn);
         Point newPosition = new Point(currentPosition.x + x, currentPosition.y + y);
         if (!board.lineExists(currentPosition, newPosition)) {
             LineType type = getTypeByTurn();
@@ -85,21 +80,19 @@ public class FootballPresenter implements FootballContract.Presenter {
             view.updateCurrentPlayer(getTypeByTurn());
             endOfAGame();
         }
+        this.menu.switchPlayer();
     }
 
-    public String getPlayerOneScore() {
-        return String.valueOf(playerOneScore);
-    }
 
-    public String getPlayerTwoScore() {
-        return String.valueOf(playerTwoScore);
-    }
 
     public void endOfAGame() {
         if (endGameStatement()) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Player   " + printWinner() + "    won");
-            menu.closeFrame();
-            new Menu();
+            menu.actualizeScore();
+            board.cleanLinesAndHideBoard();
+            init();
+            menu.hideWindow();
+            menu.showMenu();
         }
     }
 
@@ -108,15 +101,15 @@ public class FootballPresenter implements FootballContract.Presenter {
     }
 
     private String printWinner() {
-        if ((checkLoseStatement() && !playerTopTurn) || youScoredBottomGoal()){
-            playerOneScore++;
+        if ((checkLoseStatement() && !playerTopTurn) || youScoredBottomGoal()) {
+            menu.setPlayerOneScore(playerOneScore++);
+            System.out.println(playerOneScore);
             return "Green";
-        }
-        else if ((checkLoseStatement() && playerTopTurn) || youScoredTopGoal()){
-            playerTwoScore++;
+        } else if ((checkLoseStatement() && playerTopTurn) || youScoredTopGoal()) {
+            menu.setPlayerTwoScore(playerTwoScore++);
+            System.out.println(playerTwoScore);
             return "Blue";
-        }
-        else return null;
+        } else return null;
     }
 
     private boolean checkLoseStatement() {
