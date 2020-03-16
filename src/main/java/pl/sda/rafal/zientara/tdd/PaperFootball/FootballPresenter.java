@@ -8,8 +8,8 @@ public class FootballPresenter implements FootballContract.Presenter {
     private final FootballContract.MainMenu menu;
     private Point currentPosition;
     private boolean playerTopTurn = true;
-    private int playerOneScore;
-    private int playerTwoScore;
+    private static int playerOneScore;
+    private static int playerTwoScore;
 
     public FootballPresenter(FootballContract.MainMenu menu, FootballContract.View view, FootballBoard board) {
         this.view = view;
@@ -93,6 +93,7 @@ public class FootballPresenter implements FootballContract.Presenter {
             init();
             menu.hideWindow();
             menu.showMenu();
+            this.menu.switchPlayer();
         }
     }
 
@@ -102,12 +103,10 @@ public class FootballPresenter implements FootballContract.Presenter {
 
     private String printWinner() {
         if ((checkLoseStatement() && !playerTopTurn) || youScoredBottomGoal()) {
-            menu.setPlayerOneScore(playerOneScore++);
-            System.out.println(playerOneScore);
+            menu.setPlayerGreenScore(++playerOneScore);
             return "Green";
         } else if ((checkLoseStatement() && playerTopTurn) || youScoredTopGoal()) {
-            menu.setPlayerTwoScore(playerTwoScore++);
-            System.out.println(playerTwoScore);
+            menu.setPlayerBlueScore(++playerTwoScore);
             return "Blue";
         } else return null;
     }

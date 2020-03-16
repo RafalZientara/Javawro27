@@ -10,10 +10,10 @@ public class FootballContract {
     public interface MainMenu {
         void showMenu();
         void switchPlayer();
-        void setVisible();
+        void setFootballFrameVisible();
         void hideWindow();
-        void setPlayerOneScore(int playerOne);
-        void setPlayerTwoScore(int playerTwo);
+        void setPlayerGreenScore(int playerOne);
+        void setPlayerBlueScore(int playerTwo);
         void actualizeScore();
     }
 

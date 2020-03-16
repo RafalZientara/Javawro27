@@ -136,9 +136,6 @@ FootballView extends JTextField
         this.player = player;
     }
 
-
-
-
     public void setPresenter(FootballContract.Presenter presenter) {
         this.presenter = presenter;
     }

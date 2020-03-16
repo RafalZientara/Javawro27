@@ -1,58 +1,107 @@
 package pl.sda.rafal.zientara.tdd.PaperFootball;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Menu implements FootballContract.MainMenu {
     private FootballPresenter presenter;
-    private JFrame frame;
+    private JFrame menu;
     private JFrame FootballFrame;
     private FootballBoard board;
     private String currentPlayer = "green";
-    private int playerOneScore;
-    private int playerTwoScore;
-    private JLabel firstPlayerScore;
-    private JLabel secondPlayerScore;
+    private int playerGreenScore;
+    private int playerBlueScore;
+    private JLabel playerGreenLabel;
+    private JLabel playerBlueLabel;
+    private JTextField playerOneName;
+    private JTextField playerTwoName;
+
 
 
     public Menu() {
-
-        menuOfTheGame();
-        startGame();
+        typeNameFrame();
     }
 
-    private void menuOfTheGame() {
-        frame = new JFrame("Menu");
-        frame.setSize(500,500);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        JButton button = new JButton("New Game");
-        button.setBounds(50,50,100,100);
-        button.addActionListener(new ActionListener() {
+    private void typeNameFrame(){
+        JFrame frame = new JFrame("Choose name");
+        frame.setSize(400,250);
+        playerOneName = new JTextField();
+        playerOneName.setBounds(0,50,200,50);
+        playerTwoName = new JTextField();
+        playerTwoName.setBounds(0,150,200,50);
+        JLabel firstPlayerLabel = new JLabel();
+        firstPlayerLabel.setText("Player one !");
+        firstPlayerLabel.setBounds(50,0,150,50);
+        JLabel secondPlayerLabel = new JLabel();
+        secondPlayerLabel.setText("Player two !");
+        secondPlayerLabel.setBounds(50,100,150,50);
+        JButton continueButton = new JButton("Continue");
+        continueButton.setBounds(200,0,200,200);
+        continueButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setVisible();
-               frame.setVisible(false);
-                JOptionPane.showMessageDialog(frame, "Player blue needs to score Top goal\n Player green needs to score Bottom goal");
+                frame.setVisible(false);
+                menuOfTheGame();
+                startGame();
             }
         });
-        firstPlayerScore = new JLabel("Player one score");
-        firstPlayerScore.setText(String.valueOf(playerOneScore));
-        firstPlayerScore.setBounds(100,200,100,50);
-        secondPlayerScore = new JLabel("Player two score");
-        secondPlayerScore.setText(String.valueOf(playerTwoScore));
-        secondPlayerScore.setBounds(250,200,100,50);
-        frame.add(button);
-        frame.add(firstPlayerScore);
-        frame.add(secondPlayerScore);
+        frame.setLayout(null);
+        frame.add(playerOneName);
+        frame.add(playerTwoName);
+        frame.add(firstPlayerLabel);
+        frame.add(secondPlayerLabel);
+        frame.add(continueButton);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+frame.setResizable(false);
         frame.setVisible(true);
     }
 
+    private ImageIcon addBallIcon(){
+        ImageIcon smile = new ImageIcon("C:\\Users\\lukla\\IdeaProjects\\Javawro27-2\\ball.jpg");
+        Image image = smile.getImage();
+        Image newimg = image.getScaledInstance(100,100, Image.SCALE_SMOOTH);
+        return new ImageIcon(newimg);
+    }
+
+    private void menuOfTheGame() {
+        menu = new JFrame("Menu");
+        menu.setSize(300,300);
+        menu.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        JButton button = new JButton();
+        button.setIcon(addBallIcon());
+        button.setBounds(100,50,100,100);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setFootballFrameVisible();
+               menu.setVisible(false);
+                JOptionPane.showMessageDialog(menu, "Player blue needs to score Top goal\n Player green needs to score Bottom goal");
+            }
+        });
+
+        playerGreenLabel = new JLabel();
+        playerGreenLabel.setText("Player "+playerOneName.getText()+"(green):  "+ playerGreenScore);
+        playerGreenLabel.setBounds(25,150,275,50);
+        playerBlueLabel = new JLabel();
+        playerBlueLabel.setText("Player "+playerTwoName.getText()+"(blue):  "+playerBlueScore);
+        playerBlueLabel.setBounds(25,200,275,50);
+        menu.add(button);
+        menu.add(playerGreenLabel);
+        menu.add(playerBlueLabel);
+        menu.setLayout(null);
+        menu.setLocationRelativeTo(null);
+        menu.setBackground(Color.pink);
+        menu.setResizable(false);
+        menu.setVisible(true);
+    }
 
 
     @Override
     public void showMenu() {
-        frame.setVisible(true);
+        menu.setVisible(true);
     }
 
     private void startGame() {
@@ -66,13 +115,12 @@ public class Menu implements FootballContract.MainMenu {
         showMeBoard(footballView);
     }
 
-    public void setVisible() {
+    public void setFootballFrameVisible() {
         FootballFrame.setVisible(true);
     }
 
     public void hideWindow() {
-        System.out.println(playerOneScore);
-        System.out.println(playerTwoScore);
+
         FootballFrame.setVisible(false);
     }
 
@@ -88,23 +136,22 @@ public class Menu implements FootballContract.MainMenu {
     public void switchPlayer() {
         this.currentPlayer = this.currentPlayer.equals("green") ? "blue" : "green";
         FootballFrame.setTitle("Player's "+currentPlayer+" turn");
-
     }
 
     @Override
-    public void setPlayerOneScore(int playerOneScore) {
-        this.playerOneScore = playerOneScore;
+    public void setPlayerGreenScore(int playerGreenScore) {
+        this.playerGreenScore = playerGreenScore;
     }
 
     @Override
-    public void setPlayerTwoScore(int playerTwoScore) {
-        this.playerTwoScore = playerTwoScore;
+    public void setPlayerBlueScore(int playerBlueScore) {
+        this.playerBlueScore = playerBlueScore;
     }
 
     @Override
     public void actualizeScore() {
-        firstPlayerScore.setText(String.valueOf(playerOneScore));
-        secondPlayerScore.setText(String.valueOf(playerTwoScore));
+        playerGreenLabel.setText("Player "+playerOneName.getText()+"(green):  "+ playerGreenScore);
+        playerBlueLabel.setText("Player "+playerTwoName.getText()+"(blue):  "+playerBlueScore);
     }
 
 }
