@@ -136,6 +136,23 @@ class DashboardPresenterTest {
                 Cash.BANK_NOTE_20));
     }
 
+    @Test
+    public void atmCalculatesCorrectly600PLN() {
+        when(machineStorage.availableMoney()).thenReturn(Arrays.asList(
+                Cash.BANK_NOTE_500,
+                Cash.BANK_NOTE_500,
+                Cash.BANK_NOTE_200,
+                Cash.BANK_NOTE_200,
+                Cash.BANK_NOTE_200));
+
+        presenter.onCashConfirmation(600);
+
+        verify(view).onWithdrawalConfirm(Arrays.asList(
+                Cash.BANK_NOTE_200,
+                Cash.BANK_NOTE_200,
+                Cash.BANK_NOTE_200));
+    }
+
 
     @Test
     public void onCheckBalanceIsCorrect() {

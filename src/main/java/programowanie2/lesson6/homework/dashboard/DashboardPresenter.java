@@ -41,22 +41,32 @@ public class DashboardPresenter implements DashboardContract.Presenter {
         List<Cash> machineCash = machineStorage.availableMoney();
         List<Cash> cashToWithdraw = new ArrayList<>();
 
-        int counter = 0;
-
         machineCash.sort(Comparator.comparingInt(Cash::getWorth).reversed());
 
-        for (Iterator<Cash> cash = machineCash.iterator(); cash.hasNext();){
-            Cash bankNote = cash.next();
-            if (bankNote.getWorth() <= value) {
-                if (!(bankNote.getWorth() + counter > value)) {
-                    counter += bankNote.getWorth();
-                    cashToWithdraw.add(bankNote);
-//                    cash.remove();
+        withdrawCalculator(value, cashToWithdraw, machineCash);
+
+        return cashToWithdraw;
+    }
+
+    private void withdrawCalculator(int value, List<Cash> toWithdraw, List<Cash> machineCash) {
+
+        int totalOfWithdrawValue = 0;
+
+        for (int i = 0; i < machineCash.size(); i++) {
+            if (machineCash.get(i).getWorth() <= value && machineCash.get(i).getWorth() + totalOfWithdrawValue <= value){
+                toWithdraw.add(machineCash.get(i));
+                totalOfWithdrawValue = getTotalAmount(toWithdraw);
+                if (totalOfWithdrawValue == value){
+                    break;
+                } else if (machineCash.get(i).getWorth() + machineCash.get(i + 1).getWorth() > value) {
+                    toWithdraw.remove(machineCash.get(i));
+                    totalOfWithdrawValue = getTotalAmount(toWithdraw);
                 }
             }
         }
-        System.out.println(counter);
-        return cashToWithdraw;
+
+        System.out.println(totalOfWithdrawValue);
+
     }
 
     @Override
