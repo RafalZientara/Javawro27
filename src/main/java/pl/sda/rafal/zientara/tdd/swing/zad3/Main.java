@@ -8,7 +8,7 @@ public class Main {
             @Override
             public void onLoginClicked(String password) {
                 System.out.println(password);
-                if("okoń".equals(password)) {
+                if("okon".equals(password)) {
                     //prawidlowe
                     loginWindow.hide();
                     new TopSecretWindow();

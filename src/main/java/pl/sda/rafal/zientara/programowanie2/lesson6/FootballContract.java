@@ -17,6 +17,7 @@ public class FootballContract {
         void moveBottomLeft();
         void moveLeft();
         void moveTopLeft();
+        MatchResult checkResult();
     }
 
 }

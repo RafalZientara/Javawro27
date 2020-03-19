@@ -64,12 +64,6 @@ public class FootballPresenter implements FootballContract.Presenter {
         //y E <-1,1>
         Point newPosition = new Point(currentPosition.x+x,currentPosition.y+y);
         System.out.println(getTypeByTurn());
-        if (playerTopWin()) {
-            System.out.println("PlayerTopWin");
-        }
-        if (playerBottomWin()){
-            System.out.println("PlayerBottomWin");
-        }
         if(!board.lineExists(currentPosition,newPosition) && !playerTopWin() && !playerBottomWin()){
             LineType type = getTypeByTurn();
             if(!board.hasAnyConnection(newPosition)){
@@ -79,8 +73,8 @@ public class FootballPresenter implements FootballContract.Presenter {
             currentPosition = newPosition;
             view.updatePosition(currentPosition);
             view.updateCurrentPlayer(getTypeByTurn());
-
         }
+
     }
 
     private LineType getTypeByTurn() {
@@ -102,6 +96,20 @@ public class FootballPresenter implements FootballContract.Presenter {
         if(getTypeByTurn()==LineType.PLAYER_BOTTOM && (currentPosition.equals(new Point(widthCenter - 1, board.height)) || currentPosition.equals(new Point(widthCenter,board.height))
                 || currentPosition.equals(new Point(widthCenter + 1,board.height)))){
             //System.out.println("Player Bottom win!");
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public MatchResult checkResult(){
+        if (playerTopWin()) return MatchResult.PLAYER_TOP_WIN;
+        if (playerBottomWin()) return  MatchResult.PLAYER_BOTTOM_WIN;
+        return MatchResult.PLAY;
+    }
+
+    public boolean ifGameIsWin(){
+        if (checkResult()==MatchResult.PLAYER_TOP_WIN || checkResult()==MatchResult.PLAYER_BOTTOM_WIN){
             return true;
         }
         return false;

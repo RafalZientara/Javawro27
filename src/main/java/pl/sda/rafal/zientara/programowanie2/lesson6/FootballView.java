@@ -142,5 +142,7 @@ public class FootballView extends JTextField implements FootballContract.View {
         this.presenter = presenter;
     }
 
-
+    public FootballContract.Presenter getPresenter() {
+        return presenter;
+    }
 }
