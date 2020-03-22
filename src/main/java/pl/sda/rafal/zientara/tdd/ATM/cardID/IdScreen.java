@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class IdScreen extends BaseSwingScreen implements IdContract.View {
 
@@ -17,12 +18,14 @@ public class IdScreen extends BaseSwingScreen implements IdContract.View {
 
     private final IdContract.Presenter presenter = new IdPresenter(this);
     private final ScreenListener listener;
+    private ArrayList<Person> users;
 
     public IdScreen(IdScreen.ScreenListener listener) {
         this.listener = listener;
         cardIDField = new JPasswordField();
         message = new JLabel();
         confirm = new JButton("Confirm");
+        users = presenter.getUsers();
         init();
     }
 
@@ -89,6 +92,10 @@ public class IdScreen extends BaseSwingScreen implements IdContract.View {
     @Override
     public void wrongId() {
         listener.onWrongId();
+    }
+
+    public ArrayList<Person> getUserList() {
+        return users;
     }
 
     public interface ScreenListener {

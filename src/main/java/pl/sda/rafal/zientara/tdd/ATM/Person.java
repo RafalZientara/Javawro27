@@ -15,7 +15,13 @@ public class Person {
         this.id = id;
         this.pin = pin;
         this.availableCash = initRandomWallet();
+    }
 
+    public Person(String name, int id, String pin, int availableCash) {
+        this.name = name;
+        this.id = id;
+        this.pin = pin;
+        this.availableCash = availableCash;
     }
 
     public int getId() {

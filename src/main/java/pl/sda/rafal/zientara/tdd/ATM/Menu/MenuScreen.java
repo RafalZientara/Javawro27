@@ -1,9 +1,15 @@
 package pl.sda.rafal.zientara.tdd.ATM.Menu;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import pl.sda.rafal.zientara.tdd.ATM.BaseSwingScreen;
+import pl.sda.rafal.zientara.tdd.ATM.Person;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class MenuScreen extends BaseSwingScreen {
 
@@ -32,6 +38,7 @@ public class MenuScreen extends BaseSwingScreen {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Your name is\n" + name);
         });
         exit.addActionListener(e -> {
+            saveToFile();
             System.exit(0);
         });
         withdraw.addActionListener(e -> {
@@ -50,8 +57,9 @@ public class MenuScreen extends BaseSwingScreen {
             if (response==0) {
                 listener.onCheckActualBalance();
                 if (availableCash>=5) {
-                    setBalance(availableCash-5);
+                    listener.onSetBalance(availableCash-5);
                     JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Your PIN number is: "+PIN+" Thanks for 5 PLN");
+                    listener.onSetPIN(PIN);
                 }
                 else JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "You can't check your PIN number, because u have no money:(");
             }
@@ -69,8 +77,18 @@ public class MenuScreen extends BaseSwingScreen {
         this.name = name;
     }
 
+    private void saveToFile() {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter("C:\\program\\person.json")) {
+            ArrayList<Person> users = listener.getUserList();
+            gson.toJson(users, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setBalance(int availableCash) {
-        this.availableCash = availableCash;
+        this.availableCash=availableCash;
     }
 
     public interface ScreenListener {
@@ -79,5 +97,8 @@ public class MenuScreen extends BaseSwingScreen {
         void onWithdrawalMoney();
         void setNewPinFrame();
         String getPINOption();
+        void onSetPIN(String pin);
+        ArrayList<Person> getUserList();
+        void onSetBalance(int balance);
     }
 }

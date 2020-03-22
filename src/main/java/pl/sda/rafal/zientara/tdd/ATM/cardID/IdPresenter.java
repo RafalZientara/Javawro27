@@ -1,28 +1,23 @@
 package pl.sda.rafal.zientara.tdd.ATM.cardID;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import pl.sda.rafal.zientara.tdd.ATM.PeopleWhoCanGetCash;
 import pl.sda.rafal.zientara.tdd.ATM.Person;
 import pl.sda.rafal.zientara.tdd.ATM.wrong.IsNumber;
 
 import javax.swing.*;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
 public class IdPresenter implements IdContract.Presenter {
 
     private final IdContract.View view;
-    private List<Person> users;
+    private ArrayList<Person> users;
     private Person person;
 
 
     public IdPresenter(IdContract.View view) {
         this.view = view;
         PeopleWhoCanGetCash people = new PeopleWhoCanGetCash();
-        users = people.getPeopleList();
+        users = (ArrayList<Person>) people.getPeopleList();
         System.out.println(users);
     }
 
@@ -44,7 +39,6 @@ public class IdPresenter implements IdContract.Presenter {
                 view.correctId();
                 find = true;
                 person = users.get(Integer.parseInt(id) - 1);
-                saveToFile();
                 break;
             }
         }
@@ -54,15 +48,9 @@ public class IdPresenter implements IdContract.Presenter {
         }
     }
 
-    private void saveToFile() {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter("C:\\program\\person_notChanged.json")) {
-            for (Person p : users)
-                if (p.getId() != person.getId())
-                    gson.toJson(p, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+    public ArrayList<Person> getUsers() {
+        return users;
     }
 
     public Person getPerson() {

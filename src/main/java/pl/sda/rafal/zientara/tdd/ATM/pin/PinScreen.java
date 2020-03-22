@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class PinScreen extends BaseSwingScreen implements PinContract.View {
     private final JPasswordField passwordField;
@@ -15,7 +16,8 @@ public class PinScreen extends BaseSwingScreen implements PinContract.View {
 
     private final PinContract.Presenter presenter = new PinPresenter(this);
     private final ScreenListener listener;
-private Person person;
+    private Person person;
+    private ArrayList<Person> users;
 
     public PinScreen(ScreenListener listener) {
         this.listener = listener;
@@ -53,6 +55,7 @@ private Person person;
         confirm.addActionListener(e -> {
             presenter.onPinConfirmed(passwordField.getText());
             setPersonToDash(person);
+            passwordField.setText("");
         });
         confirm.setVisible(false);
         frame.add(confirm);
@@ -105,6 +108,7 @@ private Person person;
     public Person getPerson() {
         return person;
     }
+
     public void setPersonToDash(Person person) {
         listener.setPersonToDashBoardScreen(person);
     }
@@ -113,10 +117,16 @@ private Person person;
         person.setPin(pin);
     }
 
+    public void setBalance(int balance) {
+        person.setBalance(person.getAvailableCash() - balance);
+    }
+
     public interface ScreenListener {
         //info
         void onCorrectPin();
+
         void onWrongPin();
+
         void setPersonToDashBoardScreen(Person person);
     }
 

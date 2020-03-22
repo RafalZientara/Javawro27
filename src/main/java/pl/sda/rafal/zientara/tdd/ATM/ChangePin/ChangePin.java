@@ -20,7 +20,6 @@ public class ChangePin extends BaseSwingScreen implements ChangePinContract.View
 
     public ChangePin(ChangePin.ScreenListener listener) {
         this.listener = listener;
-
         frame = new JFrame("Change Pin Menu");
         frame.setSize(400, 500);
         frame.setLayout(new GridLayout(0, 1));

@@ -2,6 +2,8 @@ package pl.sda.rafal.zientara.tdd.ATM.cardID;
 
 import pl.sda.rafal.zientara.tdd.ATM.Person;
 
+import java.util.ArrayList;
+
 public class IdContract {
     public interface View {
         void disableConfirmButton();
@@ -19,5 +21,6 @@ public class IdContract {
         void onCardIdTyping(String text);
         void onCardIdConfirmed(String text);
         Person getPerson();
+        ArrayList<Person> getUsers();
     }
 }

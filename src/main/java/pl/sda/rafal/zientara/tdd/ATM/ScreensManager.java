@@ -9,6 +9,7 @@ import pl.sda.rafal.zientara.tdd.ATM.pin.PinScreen;
 import pl.sda.rafal.zientara.tdd.ATM.thanks.ThanksScreen;
 import pl.sda.rafal.zientara.tdd.ATM.wrong.WrongPinScreen;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScreensManager implements
@@ -120,6 +121,21 @@ ChangePin.ScreenListener {
     @Override
     public String getPINOption() {
         return pinScreen.getPerson().getPin();
+    }
+
+    @Override
+    public void onSetPIN(String pin) {
+        pinScreen.setPin(pin);
+    }
+
+    @Override
+    public ArrayList<Person> getUserList() {
+        return idScreen.getUserList();
+    }
+
+    @Override
+    public void onSetBalance(int balance) {
+        pinScreen.setBalance(balance);
     }
 
 

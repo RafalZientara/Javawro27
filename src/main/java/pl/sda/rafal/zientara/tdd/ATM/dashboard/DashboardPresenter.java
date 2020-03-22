@@ -1,13 +1,9 @@
 package pl.sda.rafal.zientara.tdd.ATM.dashboard;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import pl.sda.rafal.zientara.tdd.ATM.Person;
 import pl.sda.rafal.zientara.tdd.ATM.model.Cash;
 import pl.sda.rafal.zientara.tdd.ATM.model.CashMachineStorage;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -87,17 +83,7 @@ public class DashboardPresenter implements DashboardContract.Presenter {
         else person.reduceYourBalance(temp);
         System.out.println("From dash" + person.getAvailableCash());
         //setNewBalanceToAcc();
-        saveToFIle();
         return cashToWithdraw;
-    }
-
-    private void saveToFIle() {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter("C:\\program\\person.json")) {
-            gson.toJson(person, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private int tryToGetValue(int value, Cash[] values) {
