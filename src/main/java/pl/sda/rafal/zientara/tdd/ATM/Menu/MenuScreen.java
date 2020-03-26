@@ -3,6 +3,7 @@ package pl.sda.rafal.zientara.tdd.ATM.Menu;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import pl.sda.rafal.zientara.tdd.ATM.BaseSwingScreen;
+import pl.sda.rafal.zientara.tdd.ATM.PeopleWhoCanGetCash;
 import pl.sda.rafal.zientara.tdd.ATM.Person;
 
 import javax.swing.*;
@@ -17,9 +18,14 @@ public class MenuScreen extends BaseSwingScreen {
     private String name;
     private int availableCash;
     private final ScreenListener listener;
+    private PeopleWhoCanGetCash people;
+    private Person person;
+    private final int VALUE_TO_PAY = 5;
+
 
     public MenuScreen(ScreenListener listener) {
         this.listener = listener;
+        people = PeopleWhoCanGetCash.getInstance();
         frame = new JFrame("Menu");
         frame.add(new Label("Welcome to my LucasBank Super ATM !!"));
         frame.setSize(400, 500);
@@ -30,39 +36,32 @@ public class MenuScreen extends BaseSwingScreen {
         JButton checkBalance = new JButton("Check Balance");
         JButton checkPIN = new JButton("Check your PIN");
         JButton exit = new JButton("Exit");
+
         changePin.addActionListener(e -> {
             listener.setNewPinFrame();
         });
+
         checkName.addActionListener(e -> {
-            listener.onCheckNameButton();
+            name = getPersonsName();
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Your name is\n" + name);
         });
+
         exit.addActionListener(e -> {
             saveToFile();
             System.exit(0);
         });
+
         withdraw.addActionListener(e -> {
             listener.onWithdrawalMoney();
         });
+
         checkBalance.addActionListener(e -> {
-            listener.onCheckActualBalance();
+            availableCash=person.getAvailableCash();
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Your balance is\n" + availableCash + " PLN");
         });
+
         checkPIN.addActionListener(e-> {
-            PIN = listener.getPINOption();
-            String[] options = new String[] {"Ok, i have Forgotten PIN", "No, I don't want to play!:("};
-            int response = JOptionPane.showOptionDialog(null, "You Need To Pay 5 PLN to check Your PIN number", "WARNING, AVAILABLE PAYMENT!!",
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-                    null, options, options[0]);
-            if (response==0) {
-                listener.onCheckActualBalance();
-                if (availableCash>=5) {
-                    listener.onSetBalance(availableCash-5);
-                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Your PIN number is: "+PIN+" Thanks for 5 PLN");
-                    listener.onSetPIN(PIN);
-                }
-                else JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "You can't check your PIN number, because u have no money:(");
-            }
+            checkPinMethod();
         });
         frame.add(checkName);
         frame.add(checkBalance);
@@ -73,32 +72,60 @@ public class MenuScreen extends BaseSwingScreen {
         frame.setVisible(true);
     }
 
+    private void checkPinMethod() {
+        PIN = person.getPin();
+        String[] options = new String[] {"Ok, i have Forgotten PIN", "No, I don't want to play!:("};
+        int response = JOptionPane.showOptionDialog(null, "You Need To Pay 5 PLN to check Your PIN number", "WARNING, AVAILABLE PAYMENT!!",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, options, options[0]);
+        option(response);
+    }
+
+    private void option(int response) {
+        if (response==0) {
+            availableCash=person.getAvailableCash();
+            if (availableCash>=VALUE_TO_PAY) {
+                person.decreaseUsersBalance(VALUE_TO_PAY);
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Your PIN number is: "+PIN+" Thanks for 5 PLN");
+                setPin(PIN);
+            }
+            else JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "You can't check your PIN number, because u have no money:(");
+        }
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
     private void saveToFile() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter("C:\\program\\person.json")) {
-            ArrayList<Person> users = listener.getUserList();
+        try (FileWriter writer = new FileWriter("C:\\program\\myDataWithPeople.json")) {
+            ArrayList<Person> users = people.getPeopleList();
             gson.toJson(users, writer);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void setBalance(int availableCash) {
-        this.availableCash=availableCash;
+    public void setPin(String pin) {
+        person.setPin(pin);
+        System.out.println("person's pin from menuScreen: "+person.getPin());
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public String getPersonsName() {
+        return person.getName();
+    }
+
+    public Person getPerson() {
+        return person;
     }
 
     public interface ScreenListener {
-        void onCheckNameButton();
-        void onCheckActualBalance();
         void onWithdrawalMoney();
         void setNewPinFrame();
-        String getPINOption();
-        void onSetPIN(String pin);
-        ArrayList<Person> getUserList();
-        void onSetBalance(int balance);
     }
 }

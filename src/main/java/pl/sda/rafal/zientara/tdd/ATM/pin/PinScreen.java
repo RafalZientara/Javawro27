@@ -32,13 +32,15 @@ public class PinScreen extends BaseSwingScreen implements PinContract.View {
         frame = new JFrame("Insert PIN");
         frame.setSize(400, 300);
         frame.setLayout(new GridLayout(0, 1));
-        frame.add(new Label("Pin:"));
+        Label label = new Label("Pin: (wcisnij dowolny klawisz to PIN sie pokaze =)");
+        frame.add(label);  //WERSJA ROBOCZA !!!!!!!
         frame.add(passwordField);
 
-        presenter.onPinTyping(passwordField.getText());
+        presenter.onPinTyping(String.valueOf(passwordField.getPassword()));
         passwordField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
+                label.setText("Podałem Ci PIN w wersji roboczej: "+person.getPin()+ " =)");
             }
 
             @Override
@@ -47,13 +49,12 @@ public class PinScreen extends BaseSwingScreen implements PinContract.View {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                presenter.onPinTyping(passwordField.getText());
-
+                presenter.onPinTyping(String.valueOf(passwordField.getPassword()));
             }
         });
         frame.add(message);
         confirm.addActionListener(e -> {
-            presenter.onPinConfirmed(passwordField.getText());
+            presenter.onPinConfirmed(String.valueOf(passwordField.getPassword()));
             setPersonToDash(person);
             passwordField.setText("");
         });
@@ -100,33 +101,20 @@ public class PinScreen extends BaseSwingScreen implements PinContract.View {
     public void wrongPin() {
         listener.onWrongPin();
     }
-
     public void setPerson(Person person) {
         this.person = person;
     }
-
     public Person getPerson() {
         return person;
     }
-
     public void setPersonToDash(Person person) {
         listener.setPersonToDashBoardScreen(person);
-    }
-
-    public void setPin(String pin) {
-        person.setPin(pin);
-    }
-
-    public void setBalance(int balance) {
-        person.setBalance(person.getAvailableCash() - balance);
     }
 
     public interface ScreenListener {
         //info
         void onCorrectPin();
-
         void onWrongPin();
-
         void setPersonToDashBoardScreen(Person person);
     }
 

@@ -12,12 +12,15 @@ public class IdPresenter implements IdContract.Presenter {
     private final IdContract.View view;
     private ArrayList<Person> users;
     private Person person;
+    private PeopleWhoCanGetCash people = PeopleWhoCanGetCash.getInstance();
+
 
 
     public IdPresenter(IdContract.View view) {
         this.view = view;
-        PeopleWhoCanGetCash people = new PeopleWhoCanGetCash();
-        users = (ArrayList<Person>) people.getPeopleList();
+        PeopleWhoCanGetCash.getInstance();
+        people.addElementsFromFileToList();
+        users = people.getPeopleList();
         System.out.println(users);
     }
 

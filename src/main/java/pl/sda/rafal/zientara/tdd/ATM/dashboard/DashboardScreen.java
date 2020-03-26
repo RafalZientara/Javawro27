@@ -16,7 +16,6 @@ public class DashboardScreen extends BaseSwingScreen implements DashboardContrac
     private final JTextField moneyAmount;
     private final JLabel message;
     private final JButton confirm;
-    private String cash;
     private Person person;
     private final DashboardContract.Presenter presenter = new DashboardPresenter(this, new RandomMachineStorage());
     private final ScreenListener listener;
@@ -52,12 +51,15 @@ public class DashboardScreen extends BaseSwingScreen implements DashboardContrac
         message = new JLabel();
         frame.add(message);
         confirm = new JButton("Confirm");
+        JButton back = new JButton("Back to menu");
         confirm.addActionListener(e -> {
 presenter.onCashConfirmed(Integer.parseInt(moneyAmount.getText().trim()));
 label.setText(clearLabel());
             moneyAmount.setText("");
         });
         frame.add(confirm);
+        back.addActionListener(e-> listener.backFromDashToMenu());
+        frame.add(back);
     }
 
     private String clearLabel() {
@@ -119,6 +121,7 @@ label.setText(clearLabel());
 
     public interface ScreenListener {
         void onCashWithdrawal(List<Cash> money);
+        void backFromDashToMenu();
     }
 
 }

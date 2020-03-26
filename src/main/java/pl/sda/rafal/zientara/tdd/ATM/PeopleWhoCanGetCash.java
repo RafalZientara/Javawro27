@@ -1,16 +1,15 @@
 package pl.sda.rafal.zientara.tdd.ATM;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class PeopleWhoCanGetCash{
-    private List<Person> peopleList;
+    private ArrayList<Person> peopleList;
+    private static final PeopleWhoCanGetCash INSTANCE  = new PeopleWhoCanGetCash();
 
     public PeopleWhoCanGetCash() {
-        peopleList = RandomAddPeople.addRandomNumberOfPeople();
-        //peopleList=JsonParsing.getGson();
     }
 
-    public List<Person> getPeopleList() {
+    public ArrayList<Person> getPeopleList() {
         return peopleList;
     }
 
@@ -20,4 +19,16 @@ public class PeopleWhoCanGetCash{
                 peopleList +
                 '}';
     }
+
+    public void addRandomElementsToList() {
+        peopleList = RandomAddPeople.addRandomNumberOfPeople();
+    }
+    public void addElementsFromFileToList() {
+        peopleList = JsonParsing.getGson();
+    }
+
+    public static PeopleWhoCanGetCash getInstance(){
+        return INSTANCE;
+    }
+
 }

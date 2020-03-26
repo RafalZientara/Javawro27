@@ -12,10 +12,10 @@ public class DashboardPresenter implements DashboardContract.Presenter {
     private final CashMachineStorage machineStorage;
     private List<Cash> cashToWithdraw;
     private List<Cash> ATMCash;
+    private List<Cash> tempCash;
     private int userBalance;
     private int lastValue;
     private Person person;
-    private int temp;
 
     public DashboardPresenter(DashboardContract.View view, CashMachineStorage machineStorage) {
         this.view = view;
@@ -28,9 +28,10 @@ public class DashboardPresenter implements DashboardContract.Presenter {
 
     @Override
     public void getCashPossibility(String value) {
-            person = view.getPerson();
-            userBalance = person.getAvailableCash();
-            setUserBalance(userBalance);
+
+        person = view.getPerson();
+        userBalance = person.getAvailableCash();
+        setUserBalance(userBalance);
         String enter = value.trim();
         view.disableConfirmButton();
         if (enter.equals("0")) {
@@ -51,6 +52,7 @@ public class DashboardPresenter implements DashboardContract.Presenter {
 
     @Override
     public void onCashConfirmed(int value) {
+        ATMCash = machineStorage.availableMoney();
         if (isMyAmountInATMMoreThanValueIWant(value)) {
             List<Cash> myCashToWithDraw = withdrawCash(value);
             view.onWithdrawalConfirm(myCashToWithDraw);
@@ -59,17 +61,14 @@ public class DashboardPresenter implements DashboardContract.Presenter {
         }
     }
 
-
     private boolean onlyBanknotes(String enter) {
         return Integer.parseInt(enter) % 10 != 0;
     }
 
     private List<Cash> withdrawCash(int value) {
-        temp = 0;
-        temp = value;
+        int temp = value;
         cashToWithdraw = new LinkedList<>();
-        Cash[] values = Cash.values();
-        lastValue = values.length - 1;
+        Cash[] values = getCash();
         value = tryToGetValue(value, values);
         if (value != 0) {
             lastValue--;
@@ -78,24 +77,37 @@ public class DashboardPresenter implements DashboardContract.Presenter {
             values[5] = null;
             tryToGetValue(value, values);
         }
-
-        if (!isValueSameToCasYouWant(temp)) cashToWithdraw = null;
-        else person.reduceYourBalance(temp);
-        System.out.println("From dash" + person.getAvailableCash());
-        //setNewBalanceToAcc();
-        return cashToWithdraw;
+        if (value == 0) {
+            person.reduceYourBalance(temp);
+            return cashToWithdraw;
+        } else {
+            return null;
+        }
     }
 
+    private Cash[] getCash() {
+        Cash[] values = Cash.values();
+        lastValue = values.length - 1;
+        return values;
+    }
+
+
     private int tryToGetValue(int value, Cash[] values) {
+        tempCash = new LinkedList<>();
         ATMCash = machineStorage.availableMoney();
+        tempCash.addAll(ATMCash);
         for (int nominalIndex = lastValue; nominalIndex >= 0; nominalIndex--) {
             while (value >= values[nominalIndex].getWorth()) {
                 if (isCashInCashMachine(values[nominalIndex])) {
                     cashToWithdraw.add(values[nominalIndex]);
-                    ATMCash.remove(values[nominalIndex]);
+                    tempCash.remove(values[nominalIndex]);
                     value -= values[nominalIndex].getWorth();
                 } else break;
             }
+        }
+        if (value == 0) {
+            ATMCash.clear();
+            ATMCash.addAll(tempCash);
         }
         return value;
     }
@@ -106,13 +118,11 @@ public class DashboardPresenter implements DashboardContract.Presenter {
 
 
     private boolean isCashInCashMachine(Cash cash) {
-        List<Cash> ATMcash = machineStorage.availableMoney();
-        return ATMcash.contains(cash);
+        return tempCash.contains(cash);
     }
 
     private boolean isMyAmountInATMMoreThanValueIWant(int valueTyped) {
-        List<Cash> ATMcash = machineStorage.availableMoney();
-        int sum = getSum(ATMcash);
+        int sum = getSum(ATMCash);
         return sum >= valueTyped;
     }
 
@@ -123,11 +133,6 @@ public class DashboardPresenter implements DashboardContract.Presenter {
         }
         return sum;
     }
-
-    private boolean isValueSameToCasYouWant(int value) {
-        return getSum(cashToWithdraw) == value;
-    }
-
 
     @Override
     public Person getPerson() {

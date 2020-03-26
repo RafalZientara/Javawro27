@@ -1,6 +1,7 @@
 package pl.sda.rafal.zientara.tdd.ATM.ChangePin;
 
 import pl.sda.rafal.zientara.tdd.ATM.BaseSwingScreen;
+import pl.sda.rafal.zientara.tdd.ATM.PeopleWhoCanGetCash;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,9 +18,12 @@ public class ChangePin extends BaseSwingScreen implements ChangePinContract.View
     private JTextField oldPin;
     private JTextField newPin;
     private JTextField againNewPin;
+    private final PeopleWhoCanGetCash people;
+
 
     public ChangePin(ChangePin.ScreenListener listener) {
         this.listener = listener;
+        people = PeopleWhoCanGetCash.getInstance();
         frame = new JFrame("Change Pin Menu");
         frame.setSize(400, 500);
         frame.setLayout(new GridLayout(0, 1));
@@ -40,6 +44,8 @@ public class ChangePin extends BaseSwingScreen implements ChangePinContract.View
         message = new JLabel();
         message.setText("Type old and new PIN number");
         frame.add(confirm);
+        JButton back = new JButton("Back to main Menu");
+        back.addActionListener(e-> listener.backFromPinToMenu());
         confirm.addActionListener(e-> {
             if (presenter.onPinConfirmed(getPin(), oldPin.getText())) {
                 myNewPin = newPin.getText();
@@ -54,6 +60,7 @@ public class ChangePin extends BaseSwingScreen implements ChangePinContract.View
             }
         });
         frame.add(message);
+        frame.add(back);
         frame.setVisible(true);
     }
 
@@ -148,5 +155,7 @@ public class ChangePin extends BaseSwingScreen implements ChangePinContract.View
     public interface ScreenListener {
         void onChangePin(String pin);
         String getPin();
+
+        void backFromPinToMenu();
     }
 }

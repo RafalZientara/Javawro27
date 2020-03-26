@@ -9,7 +9,6 @@ import pl.sda.rafal.zientara.tdd.ATM.pin.PinScreen;
 import pl.sda.rafal.zientara.tdd.ATM.thanks.ThanksScreen;
 import pl.sda.rafal.zientara.tdd.ATM.wrong.WrongPinScreen;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ScreensManager implements
@@ -37,9 +36,8 @@ ChangePin.ScreenListener {
     public void onCorrectPin() {
         pinScreen.hide();
         menuScreen = new MenuScreen(this);
+        menuScreen.setPerson(pinScreen.getPerson());
         loadDashboardAndHide();
-
-        //showDashboard(); <= when withdraw
     }
 
     private void loadDashboardAndHide() {
@@ -53,9 +51,11 @@ ChangePin.ScreenListener {
         showPinScreen();
     }
 
-    @Override
-    public void onWrongId() {
+    public void backFromDashToMenu() {
+        dashboardScreen.hide();
+        menuScreen.show();
     }
+
 
     @Override
     public void setPersonToPinScreen(Person person) {
@@ -64,7 +64,7 @@ ChangePin.ScreenListener {
 
     @Override
     public void setPersonToDashBoardScreen(Person person) {
-        dashboardScreen.setPerson(person);
+if (dashboardScreen!=null)        dashboardScreen.setPerson(person);
     }
 
     private void showPinScreen() {
@@ -79,7 +79,7 @@ ChangePin.ScreenListener {
     @Override
     public void onWrongPin() {
         pinScreen.hide();
-        wrongPinScreen = new WrongPinScreen(this);
+        if (wrongPinScreen==null) wrongPinScreen = new WrongPinScreen(this);
         wrongPinScreen.show();
     }
 
@@ -90,21 +90,19 @@ ChangePin.ScreenListener {
         pinScreen.show();
     }
 
+
+    @Override
+    public int getId() {
+        return idScreen.getId();
+    }
+
+
     @Override
     public void onWithdrawalConfirm() {
         thanksScreen.hide();
         menuScreen.show();
     }
 
-    @Override
-    public void onCheckNameButton() {
-        menuScreen.setName(pinScreen.getPerson().getName());
-    }
-
-    @Override
-    public void onCheckActualBalance() {
-        menuScreen.setBalance(pinScreen.getPerson().getAvailableCash());
-    }
 
     @Override
     public void onWithdrawalMoney() {
@@ -115,37 +113,13 @@ ChangePin.ScreenListener {
     @Override
     public void setNewPinFrame() {
         menuScreen.hide();
-        showChangePinFrame();
-    }
-
-    @Override
-    public String getPINOption() {
-        return pinScreen.getPerson().getPin();
-    }
-
-    @Override
-    public void onSetPIN(String pin) {
-        pinScreen.setPin(pin);
-    }
-
-    @Override
-    public ArrayList<Person> getUserList() {
-        return idScreen.getUserList();
-    }
-
-    @Override
-    public void onSetBalance(int balance) {
-        pinScreen.setBalance(balance);
-    }
-
-
-    private void showChangePinFrame() {
         changePin = new ChangePin(this);
     }
 
+
     @Override
     public void onChangePin(String pin) {
-        pinScreen.setPin(pin);
+        menuScreen.setPin(pin);
         changePin.hide();
         menuScreen.show();
     }
@@ -153,6 +127,12 @@ ChangePin.ScreenListener {
     @Override
     public String getPin() {
         return pinScreen.getPerson().getPin();
+    }
+
+    @Override
+    public void backFromPinToMenu() {
+        changePin.hide();
+        menuScreen.show();
     }
 
     @Override

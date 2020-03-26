@@ -4,7 +4,6 @@ import pl.sda.rafal.zientara.tdd.ATM.wrong.IsNumber;
 
 public class PinPresenter implements PinContract.Presenter {
     private final PinContract.View view;
-    private String correctPin = "1234";
     private final int pinLength = 4;
     private Person person;
 
@@ -29,7 +28,6 @@ public class PinPresenter implements PinContract.Presenter {
     public void onPinConfirmed(String pin) {
         person = view.getPerson();
         if (pin.equals(person.getPin())) {
-            //correctPin = person.getPin();
             view.correctPin();
             view.enableConfirmButton();
         } else {

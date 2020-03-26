@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+import static java.util.Objects.isNull;
+
 
 public class ThanksScreen extends BaseSwingScreen implements ThanksContract.View {
     private final JLabel message;
@@ -46,8 +48,7 @@ public class ThanksScreen extends BaseSwingScreen implements ThanksContract.View
     @Override
     public void showMeTheMoney(List<Cash> withdrawal) {
         StringBuilder builder = new StringBuilder();
-
-        if (withdrawal == null) {
+        if (isNull(withdrawal)) {
             moneyInfo.setText("You haven't withdrawal any money");
             message.setText("");
         } else {

@@ -9,12 +9,14 @@ public class Person {
     private int id;
     private String pin;
     private int availableCash;
+    private boolean cardBlocked;
 
     public Person(int id, String pin) {
         this.name = RandomStringUtils.randomAlphabetic(1).charAt(0) + RandomStringUtils.randomAlphabetic(5, 10).substring(1);
         this.id = id;
         this.pin = pin;
         this.availableCash = initRandomWallet();
+        this.cardBlocked = false;
     }
 
     public Person(String name, int id, String pin, int availableCash) {
@@ -23,6 +25,7 @@ public class Person {
         this.pin = pin;
         this.availableCash = availableCash;
     }
+
 
     public int getId() {
         return id;
@@ -67,8 +70,25 @@ public class Person {
         return name;
     }
 
-    public void setBalance(int valueToAdd) {
+    public void decreaseUsersBalance(int valueToAdd) {
         availableCash -= valueToAdd;
+    }
+
+    public Person getPerson() {
+        return this;
+    }
+
+
+    public void setBlocked(int id) {
+        if (this.id==id) setCardBlocked(true);
+    }
+
+    public boolean isCardBlocked() {
+        return cardBlocked;
+    }
+
+    public void setCardBlocked(boolean cardBlocked) {
+        this.cardBlocked = cardBlocked;
     }
 }
 

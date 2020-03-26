@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class RandomAddPeople {
 
-    public static List<Person> addRandomNumberOfPeople() {
-        List<Person> peopleList = new ArrayList<>();
+    public static ArrayList<Person> addRandomNumberOfPeople() {
+        ArrayList<Person> peopleList = new ArrayList<>();
         Random random = new Random();
         int number = random.nextInt(30) + 1;
         for (int i = 0; i < number; i++) {

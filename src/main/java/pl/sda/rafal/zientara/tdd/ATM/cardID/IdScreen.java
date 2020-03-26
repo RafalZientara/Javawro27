@@ -52,6 +52,7 @@ public class IdScreen extends BaseSwingScreen implements IdContract.View {
         }));
         confirm.addActionListener(e -> {
             presenter.onCardIdConfirmed(cardIDField.getText());
+            if (presenter.getPerson()!=null)
             setPerson(presenter.getPerson());
         });
         frame.add(message);
@@ -84,23 +85,22 @@ public class IdScreen extends BaseSwingScreen implements IdContract.View {
         listener.onCorrectId();
     }
 
+    @Override
+    public void wrongId() {
+        cardIDField.setText("");
+    }
+
     public void setPerson(Person person) {
         listener.setPersonToPinScreen(person);
     }
 
-
-    @Override
-    public void wrongId() {
-        listener.onWrongId();
+    public int getId() {
+        return Integer.parseInt(cardIDField.getText());
     }
 
-    public ArrayList<Person> getUserList() {
-        return users;
-    }
 
     public interface ScreenListener {
         void onCorrectId();
-        void onWrongId();
         void setPersonToPinScreen(Person person);
 
     }
