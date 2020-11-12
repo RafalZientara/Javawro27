@@ -19,6 +19,7 @@ TicTacToe game;
         System.out.println("setup");
         game = new TicTacToe();
     }
+
     @Test
     public void boardIsEmptyAtStart(){
         //given

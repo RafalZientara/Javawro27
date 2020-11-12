@@ -16,6 +16,10 @@ public class NamesMain {
         saveReportToFile(report);
     }
 
+    /**
+     *
+     * @param report
+     */
     private static void saveReportToFile(String report) {
         File file = new File("report.txt");
         try {
@@ -29,6 +33,10 @@ public class NamesMain {
 
     }
 
+    /**
+     *
+     * @param file
+     */
     private static void openTextEditor(File file) {
         ProcessBuilder processBuilder = new ProcessBuilder();
         processBuilder.command("cmd.exe", "/c", file.getAbsolutePath());
@@ -39,6 +47,12 @@ public class NamesMain {
         }
     }
 
+    /**
+     *
+     * @param maleNames
+     * @param femaleNames
+     * @return
+     */
     private static String getResultReport(String[] maleNames, String[] femaleNames) {
         StringBuilder builder = new StringBuilder();
 
@@ -59,7 +73,12 @@ public class NamesMain {
         return builder.toString();
     }
 
-
+    /**
+     *
+     * @param firstLetter
+     * @param names
+     * @return
+     */
     private static int getNamesWithLetterCount(char firstLetter, String[] names) {
         int count = 0;
 //        String firstChar = String.valueOf(firstLetter); //sposób 1
@@ -73,12 +92,21 @@ public class NamesMain {
         return count;
     }
 
-
+    /**
+     *
+     * @param fileName
+     * @return
+     */
     private static String[] getNamesFromFile(String fileName) {
         String allNames = getFileData(fileName);
         return getNormalizedNames(allNames);
     }
 
+    /**
+     *
+     * @param fileName
+     * @return
+     */
     private static String getFileData(String fileName) {
         String allNames = "";
         File file = new File(fileName);
@@ -95,6 +123,11 @@ public class NamesMain {
         return allNames;
     }
 
+    /**
+     *
+     * @param allNames
+     * @return
+     */
     private static String[] getNormalizedNames(String allNames) {
         String[] names = allNames.split(",");
 
@@ -106,6 +139,8 @@ public class NamesMain {
         }
         return names;
     }
+
+
 }
 
 
